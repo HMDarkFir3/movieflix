@@ -8,6 +8,8 @@ import {
 import { FC } from "react";
 import { ThemeProvider } from "styled-components/native";
 
+import { StreamingProvider } from "@contexts/StreamingContext";
+
 import { Routes } from "@routes/index";
 
 import { dark } from "@themes/dark";
@@ -25,7 +27,9 @@ export const App: FC = () => {
 
   return (
     <ThemeProvider theme={dark}>
-      <Routes />
+      <StreamingProvider>
+        <Routes />
+      </StreamingProvider>
     </ThemeProvider>
   );
 };

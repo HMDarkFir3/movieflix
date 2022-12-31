@@ -1,6 +1,17 @@
 export const dark = {
   colors: {
-    background: "#0e0e15",
+    screens: {
+      home: {
+        background: "#0e0e15",
+      },
+    },
+    statusBar: {
+      background: "#0e0e15",
+    },
+    navigationBar: {
+      background: "#0e0e15",
+    },
+
     primary: "#f31233",
     secondary: "#e1e2eb",
     tertiary: "#1b1a23",
