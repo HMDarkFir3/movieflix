@@ -24,9 +24,11 @@ interface Props {
 }
 
 export const UpcomingCard: FC<Props> = (props) => {
-  const { backdrop_path, title, adult } = props.data;
+  const { backdrop_path, title, adult, vote_average } = props.data;
 
   const { colors } = useTheme();
+
+  const rating = vote_average / 2;
 
   return (
     <Container>
@@ -45,7 +47,7 @@ export const UpcomingCard: FC<Props> = (props) => {
             color={colors.screens.home.components.upcomingCard.star}
             weight="fill"
           />
-          <Rating>8.5</Rating>
+          <Rating>{rating.toFixed(1)}</Rating>
         </RatingCard>
         <Title>{title}</Title>
       </Wrapper>
