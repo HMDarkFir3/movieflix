@@ -9,6 +9,15 @@ export const dark = {
             isActive: "#f31233",
             isNotActive: "#e1e2eb",
           },
+          upcomingCard: {
+            background: "#1b1a23",
+            text: "#e1e2eb",
+            certification: {
+              free: "#00a64d",
+              adult: "#1b1a23",
+            },
+            star: "#feaa2b",
+          },
         },
       },
     },
@@ -18,12 +27,10 @@ export const dark = {
     navigationBar: {
       background: "#0e0e15",
     },
-
-    primary: "#f31233",
-    secondary: "#e1e2eb",
-    tertiary: "#1b1a23",
+    androidRipple: {
+      primary: "#333333",
+    },
     text: "#73727a",
-    star: "#feaa2b",
   },
 
   fonts: {

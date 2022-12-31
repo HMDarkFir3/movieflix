@@ -6,7 +6,10 @@ import {
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
 import { FC } from "react";
+import { QueryClientProvider } from "react-query";
 import { ThemeProvider } from "styled-components/native";
+
+import { queryClient } from "@services/queryClient";
 
 import { StreamingProvider } from "@contexts/StreamingContext";
 
@@ -27,9 +30,11 @@ export const App: FC = () => {
 
   return (
     <ThemeProvider theme={dark}>
-      <StreamingProvider>
-        <Routes />
-      </StreamingProvider>
+      <QueryClientProvider client={queryClient}>
+        <StreamingProvider>
+          <Routes />
+        </StreamingProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 };

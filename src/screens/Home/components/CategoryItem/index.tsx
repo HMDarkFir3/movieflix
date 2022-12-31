@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { PressableProps } from "react-native";
 
-import { Container, Title } from "./styles";
+import { Container, Title, CategoryItemWrapper } from "./styles";
 
 interface Props extends PressableProps {
   title: string;
@@ -17,3 +17,5 @@ export const CategoryItem: FC<Props> = (props) => {
     </Container>
   );
 };
+
+export { CategoryItemWrapper };
