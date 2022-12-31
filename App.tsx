@@ -6,8 +6,11 @@ import {
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
 import { FC } from "react";
+import { ThemeProvider } from "styled-components/native";
 
 import { Routes } from "@routes/index";
+
+import { dark } from "@themes/dark";
 
 export const App: FC = () => {
   SplashScreen.preventAutoHideAsync();
@@ -20,5 +23,9 @@ export const App: FC = () => {
   if (!fontsLoaded) return null;
   SplashScreen.hideAsync();
 
-  return <Routes />;
+  return (
+    <ThemeProvider theme={dark}>
+      <Routes />
+    </ThemeProvider>
+  );
 };
