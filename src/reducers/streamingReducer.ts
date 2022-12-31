@@ -1,14 +1,14 @@
 export interface StreamingState {
-  category: "series" | "film" | "myList";
+  category: "tv" | "movie" | "my-list";
 }
 
 export type StreamingAction = {
   type: "SET_CATEGORY_STREAMING";
-  payload: "series" | "film" | "myList";
+  payload: "tv" | "movie" | "my-list";
 };
 
 export const initialState: StreamingState = {
-  category: "film",
+  category: "movie",
 };
 
 export const streamingReducer = (

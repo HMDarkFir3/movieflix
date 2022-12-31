@@ -3,6 +3,13 @@ export const dark = {
     screens: {
       home: {
         background: "#0e0e15",
+
+        components: {
+          categoryItem: {
+            isActive: "#f31233",
+            isNotActive: "#e1e2eb",
+          },
+        },
       },
     },
     statusBar: {
