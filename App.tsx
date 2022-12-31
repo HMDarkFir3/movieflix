@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import {
@@ -7,7 +6,8 @@ import {
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
 import { FC } from "react";
-import { StyleSheet, Text, View } from "react-native";
+
+import { Routes } from "@routes/index";
 
 export const App: FC = () => {
   SplashScreen.preventAutoHideAsync();
@@ -20,19 +20,5 @@ export const App: FC = () => {
   if (!fontsLoaded) return null;
   SplashScreen.hideAsync();
 
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <Routes />;
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
