@@ -16,7 +16,7 @@ export const dark = {
               free: "#00a64d",
               adult: "#1b1a23",
             },
-            star: "#feaa2b",
+            icon: "#feaa2b",
           },
         },
       },
@@ -25,18 +25,23 @@ export const dark = {
         backgroundSecondary: "#1b1a23",
         textPrimary: "#e1e2eb",
         textSecondary: "#73727a",
-        icon: "#e1e2eb",
+        iconPrimary: "#e1e2eb",
+        iconSecondary: "#feaa2b",
         certification: {
           free: "#00a64d",
           adult: "#1b1a23",
         },
-        star: "#feaa2b",
         gradient: ["transparent", "#0e0e15"],
 
         components: {
           genreCard: {
             background: "#1b1a23",
             text: "#e1e2eb",
+          },
+          recommendedCard: {
+            background: "#1b1a23",
+            text: "#e1e2eb",
+            icon: "#feaa2b",
           },
         },
       },

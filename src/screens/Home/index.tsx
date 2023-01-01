@@ -58,6 +58,8 @@ export const Home: FC = () => {
   const onSelectedCategory = (slug: "tv" | "movie" | "my-list") =>
     streamingDispatch({ type: "SET_CATEGORY", payload: slug });
 
+  const onNavigateToDetails = (id: number) => navigate("Details", { id });
+
   useFocusEffect(
     useCallback(() => {
       StatusBar.setStatusBarTranslucent(true);
@@ -68,8 +70,6 @@ export const Home: FC = () => {
       }
     }, [])
   );
-
-  const onNavigateToDetails = (id: number) => navigate("Details", { id });
 
   return (
     <Container>

@@ -16,6 +16,19 @@ export const Title = styled.Text`
   `}
 `;
 
+export const GenreCardWrapper = styled.View`
+  margin-top: 32px;
+  padding: 0 20px;
+`;
+
+export const GenreCardTitle = styled.Text`
+  font-size: 16px;
+  ${({ theme }) => css`
+    font-family: ${theme.fonts.medium};
+    color: ${theme.colors.screens.details.components.genreCard.text};
+  `}
+`;
+
 export const GenreCardSeparator = styled.View`
   margin-left: 12px;
 `;

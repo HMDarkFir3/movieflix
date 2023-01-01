@@ -41,7 +41,7 @@ export const UpcomingCard: FC<Props> = (props) => {
         <RatingCard>
           <Star
             size={16}
-            color={colors.screens.home.components.upcomingCard.star}
+            color={colors.screens.home.components.upcomingCard.icon}
             weight="fill"
           />
           <Rating>{rating.toFixed(1)}</Rating>

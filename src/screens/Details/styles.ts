@@ -78,19 +78,6 @@ export const Rating = styled.Text`
 
 export const AddListButton = styled(Pressable)``;
 
-export const GenresWrapper = styled.View`
-  margin-top: 32px;
-  padding: 0 20px;
-`;
-
-export const Genres = styled.Text`
-  font-size: 16px;
-  ${({ theme }) => css`
-    font-family: ${theme.fonts.regular};
-    color: ${theme.colors.screens.details.textPrimary};
-  `}
-`;
-
 export const Content = styled.View`
   margin-top: 32px;
   padding: 0 20px;
@@ -99,7 +86,7 @@ export const Content = styled.View`
 export const Title = styled.Text`
   font-size: 16px;
   ${({ theme }) => css`
-    font-family: ${theme.fonts.regular};
+    font-family: ${theme.fonts.medium};
     color: ${theme.colors.screens.details.textPrimary};
   `}
 `;

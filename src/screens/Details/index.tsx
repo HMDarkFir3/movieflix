@@ -1,18 +1,34 @@
-import { FC } from "react";
+import * as StatusBar from "expo-status-bar";
+import * as NavigationBar from "expo-navigation-bar";
+import { useRef, useCallback, FC } from "react";
 import { FlatList } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  useFocusEffect,
+} from "@react-navigation/native";
 import { useQuery } from "react-query";
 import { useTheme } from "styled-components/native";
 import { ArrowLeft, Star, ListPlus } from "phosphor-react-native";
 
-import { getMovieDetails } from "@services/movies";
+import { getMovieDetails, getRecommendedMovies } from "@services/movies";
 import { apiImageUrl } from "@services/api";
 
 import {
   GenreCard,
+  GenreCardWrapper,
+  GenreCardTitle,
   GenreCardSeparator,
 } from "@components-of-screens/Details/components/GenreCard";
+import {
+  RecommendedCard,
+  RecommendedCardWrapper,
+  RecommendedCardTitle,
+  RecommendedCardSeparator,
+} from "@components-of-screens/Details/components/RecommendedCard";
 import { Loading } from "@components/Loading";
+
+import { IS_IOS } from "@utils/variables";
 
 import {
   Container,
@@ -25,8 +41,6 @@ import {
   RatingCard,
   Rating,
   AddListButton,
-  GenresWrapper,
-  Genres,
   Content,
   Title,
   Overview,
@@ -37,7 +51,7 @@ interface Params {
 }
 
 export const Details: FC = () => {
-  const { goBack } = useNavigation();
+  const { navigate, goBack } = useNavigation();
   const route = useRoute();
   const { id } = route.params as Params;
   const {
@@ -45,27 +59,51 @@ export const Details: FC = () => {
     isLoading: movieDetailsIsLoading,
     isSuccess: movieDetailsIsSuccess,
   } = useQuery(["movieDetails", id], () => getMovieDetails(id));
+  const {
+    data: recommendedMoviesData,
+    isLoading: recommendedMoviesIsLoading,
+    isSuccess: recommendedMoviesIsSuccess,
+  } = useQuery(["recommendedMovies", id], () => getRecommendedMovies(id));
   const { colors } = useTheme();
+
+  const flatListRef = useRef<FlatList>(null);
 
   const rating = movieDetailsData?.vote_average / 2;
 
   const onBackButtonPress = () => goBack();
 
+  const onNavigateToMovieDetails = (id: number) => {
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
+    navigate("Details", { id });
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setStatusBarTranslucent(true);
+
+      if (!IS_IOS) {
+        NavigationBar.setBackgroundColorAsync(colors.navigationBar.background);
+        NavigationBar.setButtonStyleAsync("light");
+      }
+    }, [])
+  );
+
   return (
     <Container>
-      {movieDetailsIsLoading && <Loading />}
+      {movieDetailsIsLoading && recommendedMoviesIsLoading && <Loading />}
 
-      {movieDetailsIsSuccess && (
+      {movieDetailsIsSuccess && recommendedMoviesIsSuccess && (
         <>
           <BackButton onPress={onBackButtonPress}>
             <ArrowLeft
               size={24}
-              color={colors.screens.details.icon}
+              color={colors.screens.details.iconPrimary}
               weight="bold"
             />
           </BackButton>
 
           <FlatList
+            ref={flatListRef}
             contentContainerStyle={{ paddingBottom: 20 }}
             data={[0]}
             keyExtractor={(item) => String(item)}
@@ -87,7 +125,7 @@ export const Details: FC = () => {
                     <RatingCard>
                       <Star
                         size={16}
-                        color={colors.screens.details.star}
+                        color={colors.screens.details.iconSecondary}
                         weight="fill"
                       />
                       <Rating>{rating.toFixed(1)}</Rating>
@@ -96,13 +134,16 @@ export const Details: FC = () => {
 
                   <Box>
                     <AddListButton>
-                      <ListPlus size={24} color={colors.screens.details.icon} />
+                      <ListPlus
+                        size={24}
+                        color={colors.screens.details.iconPrimary}
+                      />
                     </AddListButton>
                   </Box>
                 </Header>
 
-                <GenresWrapper>
-                  <Genres>Genres:</Genres>
+                <GenreCardWrapper>
+                  <GenreCardTitle>Genre:</GenreCardTitle>
 
                   <FlatList
                     style={{ marginTop: 12 }}
@@ -112,12 +153,34 @@ export const Details: FC = () => {
                     ItemSeparatorComponent={() => <GenreCardSeparator />}
                     horizontal
                   />
-                </GenresWrapper>
+                </GenreCardWrapper>
 
                 <Content>
                   <Title>{movieDetailsData?.title}</Title>
                   <Overview>{movieDetailsData?.overview}</Overview>
                 </Content>
+
+                {recommendedMoviesData?.results.length > 0 && (
+                  <RecommendedCardWrapper>
+                    <RecommendedCardTitle>Recommended:</RecommendedCardTitle>
+
+                    <FlatList
+                      style={{ marginTop: 12 }}
+                      data={recommendedMoviesData?.results}
+                      keyExtractor={(item) => String(item.id)}
+                      renderItem={({ item }) => (
+                        <RecommendedCard
+                          data={item}
+                          onPress={() => onNavigateToMovieDetails(item.id)}
+                        />
+                      )}
+                      ItemSeparatorComponent={() => (
+                        <RecommendedCardSeparator />
+                      )}
+                      horizontal
+                    />
+                  </RecommendedCardWrapper>
+                )}
               </>
             )}
           />
