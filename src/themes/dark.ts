@@ -21,10 +21,24 @@ export const dark = {
         },
       },
       details: {
-        background: "#0e0e15",
+        backgroundPrimary: "#0e0e15",
+        backgroundSecondary: "#1b1a23",
         textPrimary: "#e1e2eb",
         textSecondary: "#73727a",
         icon: "#e1e2eb",
+        certification: {
+          free: "#00a64d",
+          adult: "#1b1a23",
+        },
+        star: "#feaa2b",
+        gradient: ["transparent", "#0e0e15"],
+
+        components: {
+          genreCard: {
+            background: "#1b1a23",
+            text: "#e1e2eb",
+          },
+        },
       },
     },
     components: {
@@ -40,6 +54,7 @@ export const dark = {
     },
     androidRipple: {
       primary: "#333333",
+      secondary: "#c1c1c1",
     },
   },
 

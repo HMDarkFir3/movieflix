@@ -11,8 +11,6 @@ import {
   Container,
   Wrapper,
   Poster,
-  CertificationCard,
-  Certification,
   RatingCard,
   Rating,
   Title,
@@ -21,11 +19,12 @@ import {
 } from "./styles";
 
 interface Props extends PressableProps {
-  data: UpcomingDTO.Results;
+  data: UpcomingDTO.Result;
 }
 
 export const UpcomingCard: FC<Props> = (props) => {
-  const { backdrop_path, title, adult, vote_average, ...rest } = props.data;
+  const { backdrop_path, title, vote_average } = props.data;
+  const { ...rest } = props;
 
   const { colors } = useTheme();
 
@@ -38,9 +37,6 @@ export const UpcomingCard: FC<Props> = (props) => {
           source={{ uri: `${apiImageUrl}${backdrop_path}` }}
           resizeMode="contain"
         />
-        <CertificationCard isAdult={adult}>
-          <Certification>{adult ? "18+" : "L"}</Certification>
-        </CertificationCard>
 
         <RatingCard>
           <Star

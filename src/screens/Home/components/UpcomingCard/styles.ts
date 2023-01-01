@@ -2,10 +2,6 @@ import styled, { css } from "styled-components/native";
 
 import { SCREEN_WIDTH } from "@utils/variables";
 
-interface CertificationCardProps {
-  isAdult: boolean;
-}
-
 export const Container = styled.Pressable`
   width: ${SCREEN_WIDTH}px;
 `;
@@ -20,41 +16,6 @@ export const Poster = styled.Image`
   border-radius: 12px;
 `;
 
-export const CertificationCard = styled.View<CertificationCardProps>`
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-
-  position: absolute;
-  top: 8px;
-  left: 28px;
-
-  height: 24px;
-
-  border-radius: 8px;
-
-  ${({ theme, isAdult }) =>
-    isAdult
-      ? css`
-          width: 32px;
-          background-color: ${theme.colors.screens.home.components.upcomingCard
-            .certification.adult};
-        `
-      : css`
-          width: 24px;
-          background-color: ${theme.colors.screens.home.components.upcomingCard
-            .certification.free};
-        `}
-`;
-
-export const Certification = styled.Text`
-  font-size: 12px;
-  ${({ theme }) => css`
-    font-family: ${theme.fonts.bold};
-    color: ${theme.colors.screens.home.components.upcomingCard.text};
-  `}
-`;
-
 export const RatingCard = styled.View`
   flex-direction: row;
   align-items: center;
@@ -62,7 +23,7 @@ export const RatingCard = styled.View`
 
   position: absolute;
   top: 8px;
-  right: 28px;
+  left: 28px;
 
   height: 24px;
 

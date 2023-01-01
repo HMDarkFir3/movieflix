@@ -2,8 +2,8 @@ import * as StatusBar from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
 import { useCallback, FC } from "react";
 import { FlatList } from "react-native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useQuery } from "react-query";
-import { useFocusEffect } from "@react-navigation/native";
 import { useTheme } from "styled-components/native";
 
 import { getUpcomingMovies } from "@services/movies";
@@ -45,8 +45,7 @@ const categories = [
 
 export const Home: FC = () => {
   const { state: streamingState, dispatch: streamingDispatch } = useStreaming();
-  const { colors } = useTheme();
-
+  const { navigate } = useNavigation();
   const {
     data: upcomingMoviesData,
     isLoading: upcomingMoviesIsLoading,
@@ -54,6 +53,7 @@ export const Home: FC = () => {
   } = useQuery("upcomingMovies", getUpcomingMovies, {
     enabled: streamingState.category === "movie",
   });
+  const { colors } = useTheme();
 
   const onSelectedCategory = (slug: "tv" | "movie" | "my-list") =>
     streamingDispatch({ type: "SET_CATEGORY", payload: slug });
@@ -68,6 +68,8 @@ export const Home: FC = () => {
       }
     }, [])
   );
+
+  const onNavigateToDetails = (id: number) => navigate("Details", { id });
 
   return (
     <Container>
@@ -99,7 +101,12 @@ export const Home: FC = () => {
             style={{ marginTop: 24 }}
             data={upcomingMoviesData?.results}
             keyExtractor={(item) => String(item.id)}
-            renderItem={({ item }) => <UpcomingCard data={item} />}
+            renderItem={({ item }) => (
+              <UpcomingCard
+                data={item}
+                onPress={() => onNavigateToDetails(item.id)}
+              />
+            )}
             showsHorizontalScrollIndicator={false}
             horizontal
             pagingEnabled

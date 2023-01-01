@@ -1,10 +1,10 @@
 export namespace UpcomingDTO {
-  interface Dates {
+  interface Date {
     maximum: string;
     minimum: string;
   }
 
-  export interface Results {
+  export interface Result {
     adult: boolean;
     backdrop_path: string;
     genre_ids: number[];
@@ -22,9 +22,9 @@ export namespace UpcomingDTO {
   }
 
   export interface Response {
-    dates: Dates;
+    dates: Date;
     page: number;
-    results: Results[];
+    results: Result[];
     total_pages: number;
     total_results: number;
   }
