@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { PressableProps } from "react-native";
 import { useTheme } from "styled-components/native";
 import { Star } from "phosphor-react-native";
 
@@ -19,19 +20,19 @@ import {
   UpcomingCardTitle,
 } from "./styles";
 
-interface Props {
+interface Props extends PressableProps {
   data: UpcomingDTO.Results;
 }
 
 export const UpcomingCard: FC<Props> = (props) => {
-  const { backdrop_path, title, adult, vote_average } = props.data;
+  const { backdrop_path, title, adult, vote_average, ...rest } = props.data;
 
   const { colors } = useTheme();
 
   const rating = vote_average / 2;
 
   return (
-    <Container>
+    <Container {...rest}>
       <Wrapper>
         <Poster
           source={{ uri: `${apiImageUrl}${backdrop_path}` }}

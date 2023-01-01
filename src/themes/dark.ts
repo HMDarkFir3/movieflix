@@ -20,6 +20,17 @@ export const dark = {
           },
         },
       },
+      details: {
+        background: "#0e0e15",
+        textPrimary: "#e1e2eb",
+        textSecondary: "#73727a",
+        icon: "#e1e2eb",
+      },
+    },
+    components: {
+      loading: {
+        load: "#f31233",
+      },
     },
     statusBar: {
       background: "#0e0e15",
@@ -30,7 +41,6 @@ export const dark = {
     androidRipple: {
       primary: "#333333",
     },
-    text: "#73727a",
   },
 
   fonts: {
