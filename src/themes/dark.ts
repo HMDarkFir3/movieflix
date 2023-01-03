@@ -38,6 +38,12 @@ export const dark = {
             background: "#1b1a23",
             text: "#e1e2eb",
           },
+          actorCard: {
+            background: "#1b1a23",
+            textPrimary: "#e1e2eb",
+            textSecondary: "#f31233",
+            icon: "#f31233",
+          },
           recommendedCard: {
             background: "#1b1a23",
             text: "#e1e2eb",

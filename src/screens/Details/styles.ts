@@ -34,7 +34,7 @@ export const Gradient = styled(LinearGradient)`
   right: 0;
   bottom: 0;
 
-  height: 92px;
+  height: 108px;
 
   z-index: 2;
 `;

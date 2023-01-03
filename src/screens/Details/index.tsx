@@ -7,11 +7,15 @@ import {
   useRoute,
   useFocusEffect,
 } from "@react-navigation/native";
-import { useQuery } from "react-query";
+import { useQueries } from "react-query";
 import { useTheme } from "styled-components/native";
 import { ArrowLeft, Star, ListPlus } from "phosphor-react-native";
 
-import { getMovieDetails, getRecommendedMovies } from "@services/movies";
+import {
+  getMovieDetails,
+  getMovieCredits,
+  getRecommendedMovies,
+} from "@services/movies";
 import { apiImageUrl } from "@services/api";
 
 import {
@@ -20,6 +24,12 @@ import {
   GenreCardTitle,
   GenreCardSeparator,
 } from "@components-of-screens/Details/components/GenreCard";
+import {
+  ActorCard,
+  ActorCardWrapper,
+  ActorCardTitle,
+  ActorCardSeparator,
+} from "@components-of-screens/Details/components/ActorCard";
 import {
   RecommendedCard,
   RecommendedCardWrapper,
@@ -54,21 +64,32 @@ export const Details: FC = () => {
   const { navigate, goBack } = useNavigation();
   const route = useRoute();
   const { id } = route.params as Params;
-  const {
-    data: movieDetailsData,
-    isLoading: movieDetailsIsLoading,
-    isSuccess: movieDetailsIsSuccess,
-  } = useQuery(["movieDetails", id], () => getMovieDetails(id));
-  const {
-    data: recommendedMoviesData,
-    isLoading: recommendedMoviesIsLoading,
-    isSuccess: recommendedMoviesIsSuccess,
-  } = useQuery(["recommendedMovies", id], () => getRecommendedMovies(id));
+  // const {
+  //   data: movieDetailsData,
+  //   isLoading: movieDetailsIsLoading,
+  //   isSuccess: movieDetailsIsSuccess,
+  // } = useQuery(["movieDetails", id], () => getMovieDetails(id));
+  // const {
+  //   data: recommendedMoviesData,
+  //   isLoading: recommendedMoviesIsLoading,
+  //   isSuccess: recommendedMoviesIsSuccess,
+  // } = useQuery(["recommendedMovies", id], () => getRecommendedMovies(id));
+
+  const [movieDetailsData, movieCreditsData, recommendedMoviesData] =
+    useQueries([
+      { queryKey: ["movieDetails", id], queryFn: () => getMovieDetails(id) },
+      { queryKey: ["movieCredits", id], queryFn: () => getMovieCredits(id) },
+      {
+        queryKey: ["recommendedMovies", id],
+        queryFn: () => getRecommendedMovies(id),
+      },
+    ]);
+
   const { colors } = useTheme();
 
   const flatListRef = useRef<FlatList>(null);
 
-  const rating = movieDetailsData?.vote_average / 2;
+  const rating = movieDetailsData.data?.vote_average / 2;
 
   const onBackButtonPress = () => goBack();
 
@@ -79,9 +100,8 @@ export const Details: FC = () => {
 
   useFocusEffect(
     useCallback(() => {
-      StatusBar.setStatusBarTranslucent(true);
-
       if (!IS_IOS) {
+        StatusBar.setStatusBarTranslucent(true);
         NavigationBar.setBackgroundColorAsync(colors.navigationBar.background);
         NavigationBar.setButtonStyleAsync("light");
       }
@@ -90,9 +110,11 @@ export const Details: FC = () => {
 
   return (
     <Container>
-      {movieDetailsIsLoading && recommendedMoviesIsLoading && <Loading />}
+      {movieDetailsData.isLoading && recommendedMoviesData.isLoading && (
+        <Loading />
+      )}
 
-      {movieDetailsIsSuccess && recommendedMoviesIsSuccess && (
+      {movieDetailsData.isSuccess && recommendedMoviesData.isSuccess && (
         <>
           <BackButton onPress={onBackButtonPress}>
             <ArrowLeft
@@ -112,7 +134,7 @@ export const Details: FC = () => {
                 <PosterWrapper>
                   <Poster
                     source={{
-                      uri: `${apiImageUrl}${movieDetailsData?.poster_path}`,
+                      uri: `${apiImageUrl}${movieDetailsData.data?.poster_path}`,
                     }}
                     resizeMode="cover"
                   />
@@ -147,7 +169,7 @@ export const Details: FC = () => {
 
                   <FlatList
                     style={{ marginTop: 12 }}
-                    data={movieDetailsData?.genres}
+                    data={movieDetailsData.data?.genres}
                     keyExtractor={(item) => String(item.id)}
                     renderItem={({ item }) => <GenreCard title={item.name} />}
                     ItemSeparatorComponent={() => <GenreCardSeparator />}
@@ -156,17 +178,33 @@ export const Details: FC = () => {
                 </GenreCardWrapper>
 
                 <Content>
-                  <Title>{movieDetailsData?.title}</Title>
-                  <Overview>{movieDetailsData?.overview}</Overview>
+                  <Title>{movieDetailsData.data?.title}</Title>
+                  <Overview>{movieDetailsData.data?.overview}</Overview>
                 </Content>
 
-                {recommendedMoviesData?.results.length > 0 && (
+                {movieCreditsData.data?.cast.length > 0 && (
+                  <ActorCardWrapper>
+                    <ActorCardTitle>Actors:</ActorCardTitle>
+
+                    <FlatList
+                      style={{ marginTop: 12 }}
+                      data={movieCreditsData.data?.cast}
+                      keyExtractor={(item) => String(item.id)}
+                      renderItem={({ item }) => <ActorCard data={item} />}
+                      ItemSeparatorComponent={() => <ActorCardSeparator />}
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                    />
+                  </ActorCardWrapper>
+                )}
+
+                {recommendedMoviesData.data?.results.length > 0 && (
                   <RecommendedCardWrapper>
                     <RecommendedCardTitle>Recommended:</RecommendedCardTitle>
 
                     <FlatList
                       style={{ marginTop: 12 }}
-                      data={recommendedMoviesData?.results}
+                      data={recommendedMoviesData.data?.results}
                       keyExtractor={(item) => String(item.id)}
                       renderItem={({ item }) => (
                         <RecommendedCard
@@ -178,11 +216,14 @@ export const Details: FC = () => {
                         <RecommendedCardSeparator />
                       )}
                       horizontal
+                      showsHorizontalScrollIndicator={false}
                     />
                   </RecommendedCardWrapper>
                 )}
               </>
             )}
+            showsVerticalScrollIndicator={false}
+            bounces={false}
           />
         </>
       )}

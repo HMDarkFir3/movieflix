@@ -62,9 +62,8 @@ export const Home: FC = () => {
 
   useFocusEffect(
     useCallback(() => {
-      StatusBar.setStatusBarTranslucent(true);
-
       if (!IS_IOS) {
+        StatusBar.setStatusBarTranslucent(true);
         NavigationBar.setBackgroundColorAsync(colors.navigationBar.background);
         NavigationBar.setButtonStyleAsync("light");
       }
