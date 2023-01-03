@@ -1,18 +1,21 @@
 import { api } from "@services/api";
 
-import { UpcomingDTO } from "@dtos/Movie/UpcomingDTO";
-import { PopularDTO } from "@dtos/Movie/PopularDTO";
+import { MoviesDTO } from "@dtos/Movie/MoviesDTO";
 import { DetailsDTO } from "@dtos/Movie/DetailsDTO";
 import { CreditsDTO } from "@dtos/Movie/CreditsDTO";
-import { RecommendationsDTO } from "@dtos/Movie/RecommendationsDTO";
 
 const getUpcomingMovies = async () => {
-  const response = await api.get<UpcomingDTO.Response>("/movie/upcoming");
+  const response = await api.get<MoviesDTO.Response>("/movie/upcoming");
   return response.data;
 };
 
 const getPopularMovies = async () => {
-  const response = await api.get<PopularDTO.Response>("/movie/popular");
+  const response = await api.get<MoviesDTO.Response>("/movie/popular");
+  return response.data;
+};
+
+const getTopRatedMovies = async () => {
+  const response = await api.get<MoviesDTO.Response>("/movie/top_rated");
   return response.data;
 };
 
@@ -29,7 +32,7 @@ const getMovieCredits = async (movieId: number) => {
 };
 
 const getRecommendedMovies = async (movieId: number) => {
-  const response = await api.get<RecommendationsDTO.Response>(
+  const response = await api.get<MoviesDTO.Response>(
     `/movie/${movieId}/recommendations`
   );
   return response.data;
@@ -38,6 +41,7 @@ const getRecommendedMovies = async (movieId: number) => {
 export {
   getUpcomingMovies,
   getPopularMovies,
+  getTopRatedMovies,
   getMovieDetails,
   getMovieCredits,
   getRecommendedMovies,

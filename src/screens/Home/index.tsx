@@ -6,7 +6,11 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useQueries } from "react-query";
 import { useTheme } from "styled-components/native";
 
-import { getUpcomingMovies, getPopularMovies } from "@services/movies";
+import {
+  getUpcomingMovies,
+  getPopularMovies,
+  getTopRatedMovies,
+} from "@services/movies";
 
 import { useStreaming } from "@hooks/useStreaming";
 
@@ -24,7 +28,7 @@ import {
   MovieCardWrapper,
   MovieCardTitle,
   MovieCardSeparator,
-} from "@components-of-screens/Home/components/MovieCard";
+} from "@components/MovieCard";
 import { Loading } from "@components/Loading";
 
 import { IS_IOS, STATUS_BAR_HEIGHT } from "@utils/variables";
@@ -52,13 +56,22 @@ const categories = [
 export const Home: FC = () => {
   const { state: streamingState, dispatch: streamingDispatch } = useStreaming();
   const { navigate } = useNavigation();
-  const [upcomingMoviesData, popularMoviesData] = useQueries([
+  const [upcomingMovies, popularMovies, topRatedMovies] = useQueries([
     {
       queryKey: "upcomingMovies",
       queryFn: () => getUpcomingMovies(),
       enabled: streamingState.category === "movie",
     },
-    { queryKey: "popularMovies", queryFn: () => getPopularMovies() },
+    {
+      queryKey: "popularMovies",
+      queryFn: () => getPopularMovies(),
+      enabled: streamingState.category === "movie",
+    },
+    {
+      queryKey: "topRatedMovies",
+      queryFn: () => getTopRatedMovies(),
+      enabled: streamingState.category === "movie",
+    },
   ]);
 
   const { colors } = useTheme();
@@ -100,55 +113,83 @@ export const Home: FC = () => {
         />
       </CategoryItemWrapper>
 
-      <FlatList
-        data={[0]}
-        keyExtractor={(item) => String(item)}
-        renderItem={() => (
-          <>
-            {upcomingMoviesData.isLoading && <Loading />}
-            {upcomingMoviesData.isSuccess && (
-              <UpcomingCardWrapper>
-                <UpcomingCardTitle>Coming Soon:</UpcomingCardTitle>
-                <FlatList
-                  style={{ marginTop: 16 }}
-                  data={upcomingMoviesData.data?.results}
-                  keyExtractor={(item) => String(item.id)}
-                  renderItem={({ item }) => (
-                    <UpcomingCard
-                      data={item}
-                      onPress={() => onNavigateToDetails(item.id)}
-                    />
-                  )}
-                  showsHorizontalScrollIndicator={false}
-                  horizontal
-                  pagingEnabled
-                />
-              </UpcomingCardWrapper>
-            )}
-
-            <MovieCardWrapper>
-              <MovieCardTitle>Popular:</MovieCardTitle>
-
-              <FlatList
-                style={{ marginTop: 16 }}
-                contentContainerStyle={{ paddingBottom: 20 }}
-                data={popularMoviesData.data?.results}
-                keyExtractor={(item) => String(item.id)}
-                renderItem={({ item }) => (
-                  <MovieCard
-                    data={item}
-                    onPress={() => onNavigateToDetails(item.id)}
+      {upcomingMovies.isLoading &&
+      popularMovies.isLoading &&
+      topRatedMovies.isLoading ? (
+        <Loading />
+      ) : (
+        <FlatList
+          contentContainerStyle={{ paddingBottom: 20 }}
+          data={[0]}
+          keyExtractor={(item) => String(item)}
+          renderItem={() => (
+            <>
+              {upcomingMovies.isSuccess && (
+                <UpcomingCardWrapper>
+                  <UpcomingCardTitle>Coming Soon:</UpcomingCardTitle>
+                  <FlatList
+                    style={{ marginTop: 16 }}
+                    data={upcomingMovies.data?.results}
+                    keyExtractor={(item) => String(item.id)}
+                    renderItem={({ item }) => (
+                      <UpcomingCard
+                        data={item}
+                        onPress={() => onNavigateToDetails(item.id)}
+                      />
+                    )}
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    pagingEnabled
                   />
-                )}
-                ItemSeparatorComponent={() => <MovieCardSeparator />}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-              />
-            </MovieCardWrapper>
-          </>
-        )}
-        showsVerticalScrollIndicator={false}
-      />
+                </UpcomingCardWrapper>
+              )}
+
+              {popularMovies.isSuccess && (
+                <MovieCardWrapper>
+                  <MovieCardTitle>Popular:</MovieCardTitle>
+
+                  <FlatList
+                    style={{ marginTop: 16 }}
+                    data={popularMovies.data?.results}
+                    keyExtractor={(item) => String(item.id)}
+                    renderItem={({ item }) => (
+                      <MovieCard
+                        data={item}
+                        onPress={() => onNavigateToDetails(item.id)}
+                      />
+                    )}
+                    ItemSeparatorComponent={() => <MovieCardSeparator />}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                  />
+                </MovieCardWrapper>
+              )}
+
+              {topRatedMovies.isSuccess && (
+                <MovieCardWrapper>
+                  <MovieCardTitle>Top Rated:</MovieCardTitle>
+
+                  <FlatList
+                    style={{ marginTop: 16 }}
+                    data={topRatedMovies.data?.results}
+                    keyExtractor={(item) => String(item.id)}
+                    renderItem={({ item }) => (
+                      <MovieCard
+                        data={item}
+                        onPress={() => onNavigateToDetails(item.id)}
+                      />
+                    )}
+                    ItemSeparatorComponent={() => <MovieCardSeparator />}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                  />
+                </MovieCardWrapper>
+              )}
+            </>
+          )}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
     </Container>
   );
 };

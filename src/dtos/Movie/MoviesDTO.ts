@@ -1,4 +1,9 @@
-export namespace RecommendationsDTO {
+export namespace MoviesDTO {
+  export interface Dates {
+    maximum: string;
+    minimum: string;
+  }
+
   export interface Result {
     adult: boolean;
     backdrop_path: string;
@@ -7,6 +12,7 @@ export namespace RecommendationsDTO {
     original_language: string;
     original_title: string;
     overview: string;
+    popularity: number;
     poster_path: string;
     release_date: string;
     title: string;
@@ -16,6 +22,7 @@ export namespace RecommendationsDTO {
   }
 
   export interface Response {
+    dates?: Dates;
     page: number;
     results: Result[];
     total_pages: number;

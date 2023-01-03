@@ -31,11 +31,11 @@ import {
   ActorCardSeparator,
 } from "@components-of-screens/Details/components/ActorCard";
 import {
-  RecommendedCard,
-  RecommendedCardWrapper,
-  RecommendedCardTitle,
-  RecommendedCardSeparator,
-} from "@components-of-screens/Details/components/RecommendedCard";
+  MovieCard,
+  MovieCardWrapper,
+  MovieCardTitle,
+  MovieCardSeparator,
+} from "@components/MovieCard";
 import { Loading } from "@components/Loading";
 
 import { IS_IOS } from "@utils/variables";
@@ -67,21 +67,20 @@ export const Details: FC = () => {
   const { navigate, goBack } = useNavigation();
   const route = useRoute();
   const { id } = route.params as Params;
-  const [movieDetailsData, movieCreditsData, recommendedMoviesData] =
-    useQueries([
-      { queryKey: ["movieDetails", id], queryFn: () => getMovieDetails(id) },
-      { queryKey: ["movieCredits", id], queryFn: () => getMovieCredits(id) },
-      {
-        queryKey: ["recommendedMovies", id],
-        queryFn: () => getRecommendedMovies(id),
-      },
-    ]);
+  const [movieDetails, movieCredits, recommendedMovies] = useQueries([
+    { queryKey: ["movieDetails", id], queryFn: () => getMovieDetails(id) },
+    { queryKey: ["movieCredits", id], queryFn: () => getMovieCredits(id) },
+    {
+      queryKey: ["recommendedMovies", id],
+      queryFn: () => getRecommendedMovies(id),
+    },
+  ]);
   const { colors } = useTheme();
 
   const flatListRef = useRef<FlatList>(null);
 
-  const rating = movieDetailsData.data?.vote_average / 2;
-  const currentMovie = formatCurrentMovie(movieDetailsData.data?.runtime);
+  const rating = movieDetails.data?.vote_average / 2;
+  const currentMovie = formatCurrentMovie(movieDetails.data?.runtime);
 
   const onBackButtonPress = (): void => goBack();
 
@@ -102,11 +101,9 @@ export const Details: FC = () => {
 
   return (
     <Container>
-      {movieDetailsData.isLoading && recommendedMoviesData.isLoading && (
-        <Loading />
-      )}
+      {movieDetails.isLoading && recommendedMovies.isLoading && <Loading />}
 
-      {movieDetailsData.isSuccess && recommendedMoviesData.isSuccess && (
+      {movieDetails.isSuccess && recommendedMovies.isSuccess && (
         <>
           <BackButton onPress={onBackButtonPress}>
             <ArrowLeft
@@ -124,10 +121,10 @@ export const Details: FC = () => {
             renderItem={() => (
               <>
                 <PosterWrapper>
-                  {movieDetailsData.data?.poster_path ? (
+                  {movieDetails.data?.poster_path ? (
                     <Poster
                       source={{
-                        uri: `${apiImageUrl}${movieDetailsData.data?.poster_path}`,
+                        uri: `${apiImageUrl}${movieDetails.data?.poster_path}`,
                       }}
                       resizeMode="cover"
                     />
@@ -172,7 +169,7 @@ export const Details: FC = () => {
 
                   <FlatList
                     style={{ marginTop: 12 }}
-                    data={movieDetailsData.data?.genres}
+                    data={movieDetails.data?.genres}
                     keyExtractor={(item) => String(item.id)}
                     renderItem={({ item }) => <GenreCard title={item.name} />}
                     ItemSeparatorComponent={() => <GenreCardSeparator />}
@@ -181,17 +178,17 @@ export const Details: FC = () => {
                 </GenreCardWrapper>
 
                 <Content>
-                  <Title>{movieDetailsData.data?.title}</Title>
-                  <Overview>{movieDetailsData.data?.overview}</Overview>
+                  <Title>{movieDetails.data?.title}</Title>
+                  <Overview>{movieDetails.data?.overview}</Overview>
                 </Content>
 
-                {movieCreditsData.data?.cast.length > 0 && (
+                {movieCredits.data?.cast.length > 0 && (
                   <ActorCardWrapper>
                     <ActorCardTitle>Actors:</ActorCardTitle>
 
                     <FlatList
                       style={{ marginTop: 12 }}
-                      data={movieCreditsData.data?.cast}
+                      data={movieCredits.data?.cast}
                       keyExtractor={(item) => String(item.id)}
                       renderItem={({ item }) => <ActorCard data={item} />}
                       ItemSeparatorComponent={() => <ActorCardSeparator />}
@@ -201,27 +198,25 @@ export const Details: FC = () => {
                   </ActorCardWrapper>
                 )}
 
-                {recommendedMoviesData.data?.results.length > 0 && (
-                  <RecommendedCardWrapper>
-                    <RecommendedCardTitle>Recommended:</RecommendedCardTitle>
+                {recommendedMovies.data?.results.length > 0 && (
+                  <MovieCardWrapper>
+                    <MovieCardTitle>Recommended:</MovieCardTitle>
 
                     <FlatList
                       style={{ marginTop: 12 }}
-                      data={recommendedMoviesData.data?.results}
+                      data={recommendedMovies.data?.results}
                       keyExtractor={(item) => String(item.id)}
                       renderItem={({ item }) => (
-                        <RecommendedCard
+                        <MovieCard
                           data={item}
                           onPress={() => onNavigateToMovieDetails(item.id)}
                         />
                       )}
-                      ItemSeparatorComponent={() => (
-                        <RecommendedCardSeparator />
-                      )}
+                      ItemSeparatorComponent={() => <MovieCardSeparator />}
                       horizontal
                       showsHorizontalScrollIndicator={false}
                     />
-                  </RecommendedCardWrapper>
+                  </MovieCardWrapper>
                 )}
               </>
             )}

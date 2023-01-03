@@ -5,7 +5,7 @@ import { Star } from "phosphor-react-native";
 
 import { apiImageUrl } from "@services/api";
 
-import { UpcomingDTO } from "@dtos/Movie/UpcomingDTO";
+import { MoviesDTO } from "@dtos/Movie/MoviesDTO";
 
 import {
   Container,
@@ -19,7 +19,7 @@ import {
 } from "./styles";
 
 interface Props extends PressableProps {
-  data: UpcomingDTO.Result;
+  data: MoviesDTO.Result;
 }
 
 export const UpcomingCard: FC<Props> = (props) => {
