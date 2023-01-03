@@ -113,8 +113,8 @@ export const Home: FC = () => {
         />
       </CategoryItemWrapper>
 
-      {upcomingMovies.isLoading &&
-      popularMovies.isLoading &&
+      {upcomingMovies.isLoading ||
+      popularMovies.isLoading ||
       topRatedMovies.isLoading ? (
         <Loading />
       ) : (

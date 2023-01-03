@@ -49,7 +49,7 @@ export const MovieCard: FC<Props> = (props) => {
           color={colors.screens.home.components.movieCard.iconSecondary}
           weight="fill"
         />
-        <Rating>{rating}</Rating>
+        <Rating>{rating.toFixed(1)}</Rating>
       </RatingCard>
     </Container>
   );

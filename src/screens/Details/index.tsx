@@ -101,7 +101,7 @@ export const Details: FC = () => {
 
   return (
     <Container>
-      {movieDetails.isLoading && recommendedMovies.isLoading && <Loading />}
+      {(movieDetails.isLoading || recommendedMovies.isLoading) && <Loading />}
 
       {movieDetails.isSuccess && recommendedMovies.isSuccess && (
         <>

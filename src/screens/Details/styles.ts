@@ -2,11 +2,9 @@ import styled, { css } from "styled-components/native";
 import { Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-import {
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  STATUS_BAR_HEIGHT,
-} from "@utils/variables";
+import { SCREEN_HEIGHT, STATUS_BAR_HEIGHT } from "@utils/variables";
+
+import { getScreenSizeForMovieDetails } from "@utils/getScreenSizeForMovieDetails";
 
 export const Container = styled.View`
   flex: 1;
@@ -27,7 +25,7 @@ export const PosterWrapper = styled.View``;
 
 export const Poster = styled.Image`
   width: 100%;
-  height: ${SCREEN_HEIGHT / 1.5}px;
+  height: ${getScreenSizeForMovieDetails()}px;
 
   z-index: 1;
 `;
@@ -37,7 +35,7 @@ export const EmptyPoster = styled.View`
   justify-content: center;
 
   width: 100%;
-  height: ${SCREEN_HEIGHT / 1.5}px;
+  height: ${getScreenSizeForMovieDetails()}px;
 
   z-index: 1;
 
