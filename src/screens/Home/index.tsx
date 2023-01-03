@@ -3,10 +3,10 @@ import * as NavigationBar from "expo-navigation-bar";
 import { useCallback, FC } from "react";
 import { FlatList } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { useQuery } from "react-query";
+import { useQueries } from "react-query";
 import { useTheme } from "styled-components/native";
 
-import { getUpcomingMovies } from "@services/movies";
+import { getUpcomingMovies, getPopularMovies } from "@services/movies";
 
 import { useStreaming } from "@hooks/useStreaming";
 
@@ -19,6 +19,12 @@ import {
   UpcomingCardWrapper,
   UpcomingCardTitle,
 } from "@components-of-screens/Home/components/UpcomingCard";
+import {
+  MovieCard,
+  MovieCardWrapper,
+  MovieCardTitle,
+  MovieCardSeparator,
+} from "@components-of-screens/Home/components/MovieCard";
 import { Loading } from "@components/Loading";
 
 import { IS_IOS, STATUS_BAR_HEIGHT } from "@utils/variables";
@@ -46,13 +52,15 @@ const categories = [
 export const Home: FC = () => {
   const { state: streamingState, dispatch: streamingDispatch } = useStreaming();
   const { navigate } = useNavigation();
-  const {
-    data: upcomingMoviesData,
-    isLoading: upcomingMoviesIsLoading,
-    isSuccess: upcomingMoviesIsSuccess,
-  } = useQuery("upcomingMovies", getUpcomingMovies, {
-    enabled: streamingState.category === "movie",
-  });
+  const [upcomingMoviesData, popularMoviesData] = useQueries([
+    {
+      queryKey: "upcomingMovies",
+      queryFn: () => getUpcomingMovies(),
+      enabled: streamingState.category === "movie",
+    },
+    { queryKey: "popularMovies", queryFn: () => getPopularMovies() },
+  ]);
+
   const { colors } = useTheme();
 
   const onSelectedCategory = (slug: "tv" | "movie" | "my-list") =>
@@ -88,30 +96,59 @@ export const Home: FC = () => {
             />
           )}
           horizontal
+          showsHorizontalScrollIndicator={false}
         />
       </CategoryItemWrapper>
 
-      {upcomingMoviesIsLoading && <Loading />}
-
-      {upcomingMoviesIsSuccess && (
-        <UpcomingCardWrapper>
-          <UpcomingCardTitle>Coming Soon</UpcomingCardTitle>
-          <FlatList
-            style={{ marginTop: 24 }}
-            data={upcomingMoviesData?.results}
-            keyExtractor={(item) => String(item.id)}
-            renderItem={({ item }) => (
-              <UpcomingCard
-                data={item}
-                onPress={() => onNavigateToDetails(item.id)}
-              />
+      <FlatList
+        data={[0]}
+        keyExtractor={(item) => String(item)}
+        renderItem={() => (
+          <>
+            {upcomingMoviesData.isLoading && <Loading />}
+            {upcomingMoviesData.isSuccess && (
+              <UpcomingCardWrapper>
+                <UpcomingCardTitle>Coming Soon:</UpcomingCardTitle>
+                <FlatList
+                  style={{ marginTop: 16 }}
+                  data={upcomingMoviesData.data?.results}
+                  keyExtractor={(item) => String(item.id)}
+                  renderItem={({ item }) => (
+                    <UpcomingCard
+                      data={item}
+                      onPress={() => onNavigateToDetails(item.id)}
+                    />
+                  )}
+                  showsHorizontalScrollIndicator={false}
+                  horizontal
+                  pagingEnabled
+                />
+              </UpcomingCardWrapper>
             )}
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            pagingEnabled
-          />
-        </UpcomingCardWrapper>
-      )}
+
+            <MovieCardWrapper>
+              <MovieCardTitle>Popular:</MovieCardTitle>
+
+              <FlatList
+                style={{ marginTop: 16 }}
+                contentContainerStyle={{ paddingBottom: 20 }}
+                data={popularMoviesData.data?.results}
+                keyExtractor={(item) => String(item.id)}
+                renderItem={({ item }) => (
+                  <MovieCard
+                    data={item}
+                    onPress={() => onNavigateToDetails(item.id)}
+                  />
+                )}
+                ItemSeparatorComponent={() => <MovieCardSeparator />}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
+            </MovieCardWrapper>
+          </>
+        )}
+        showsVerticalScrollIndicator={false}
+      />
     </Container>
   );
 };

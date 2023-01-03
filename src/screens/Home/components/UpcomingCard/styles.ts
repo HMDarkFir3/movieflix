@@ -63,7 +63,7 @@ export const UpcomingCardWrapper = styled.View`
 export const UpcomingCardTitle = styled.Text`
   margin-left: 20px;
 
-  font-size: 32px;
+  font-size: 24px;
   ${({ theme }) => css`
     font-family: ${theme.fonts.bold};
     color: ${theme.colors.screens.home.components.upcomingCard.text};

@@ -9,7 +9,7 @@ import {
 } from "@react-navigation/native";
 import { useQueries } from "react-query";
 import { useTheme } from "styled-components/native";
-import { ArrowLeft, Star, ListPlus } from "phosphor-react-native";
+import { ArrowLeft, Star, ListPlus, FileX } from "phosphor-react-native";
 
 import {
   getMovieDetails,
@@ -39,13 +39,16 @@ import {
 import { Loading } from "@components/Loading";
 
 import { IS_IOS } from "@utils/variables";
+import { formatCurrentMovie } from "@utils/formatCurrentMovie";
 
 import {
   Container,
   BackButton,
   PosterWrapper,
   Poster,
+  EmptyPoster,
   Gradient,
+  Current,
   Header,
   Box,
   RatingCard,
@@ -64,17 +67,6 @@ export const Details: FC = () => {
   const { navigate, goBack } = useNavigation();
   const route = useRoute();
   const { id } = route.params as Params;
-  // const {
-  //   data: movieDetailsData,
-  //   isLoading: movieDetailsIsLoading,
-  //   isSuccess: movieDetailsIsSuccess,
-  // } = useQuery(["movieDetails", id], () => getMovieDetails(id));
-  // const {
-  //   data: recommendedMoviesData,
-  //   isLoading: recommendedMoviesIsLoading,
-  //   isSuccess: recommendedMoviesIsSuccess,
-  // } = useQuery(["recommendedMovies", id], () => getRecommendedMovies(id));
-
   const [movieDetailsData, movieCreditsData, recommendedMoviesData] =
     useQueries([
       { queryKey: ["movieDetails", id], queryFn: () => getMovieDetails(id) },
@@ -84,22 +76,22 @@ export const Details: FC = () => {
         queryFn: () => getRecommendedMovies(id),
       },
     ]);
-
   const { colors } = useTheme();
 
   const flatListRef = useRef<FlatList>(null);
 
   const rating = movieDetailsData.data?.vote_average / 2;
+  const currentMovie = formatCurrentMovie(movieDetailsData.data?.runtime);
 
-  const onBackButtonPress = () => goBack();
+  const onBackButtonPress = (): void => goBack();
 
-  const onNavigateToMovieDetails = (id: number) => {
+  const onNavigateToMovieDetails = (id: number): void => {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
     navigate("Details", { id });
   };
 
   useFocusEffect(
-    useCallback(() => {
+    useCallback((): void => {
       if (!IS_IOS) {
         StatusBar.setStatusBarTranslucent(true);
         NavigationBar.setBackgroundColorAsync(colors.navigationBar.background);
@@ -132,14 +124,25 @@ export const Details: FC = () => {
             renderItem={() => (
               <>
                 <PosterWrapper>
-                  <Poster
-                    source={{
-                      uri: `${apiImageUrl}${movieDetailsData.data?.poster_path}`,
-                    }}
-                    resizeMode="cover"
-                  />
+                  {movieDetailsData.data?.poster_path ? (
+                    <Poster
+                      source={{
+                        uri: `${apiImageUrl}${movieDetailsData.data?.poster_path}`,
+                      }}
+                      resizeMode="cover"
+                    />
+                  ) : (
+                    <EmptyPoster>
+                      <FileX
+                        size={60}
+                        color={colors.screens.details.iconTertiary}
+                      />
+                    </EmptyPoster>
+                  )}
 
-                  <Gradient colors={colors.screens.details.gradient} />
+                  <Gradient colors={colors.screens.details.gradient}>
+                    <Current>{currentMovie}</Current>
+                  </Gradient>
                 </PosterWrapper>
 
                 <Header>

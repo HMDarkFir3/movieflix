@@ -12,11 +12,13 @@ export const dark = {
           upcomingCard: {
             background: "#1b1a23",
             text: "#e1e2eb",
-            certification: {
-              free: "#00a64d",
-              adult: "#1b1a23",
-            },
             icon: "#feaa2b",
+          },
+          movieCard: {
+            background: "#1b1a23",
+            text: "#e1e2eb",
+            iconPrimary: "#73727a",
+            iconSecondary: "#feaa2b",
           },
         },
       },
@@ -27,6 +29,7 @@ export const dark = {
         textSecondary: "#73727a",
         iconPrimary: "#e1e2eb",
         iconSecondary: "#feaa2b",
+        iconTertiary: "#73727a",
         certification: {
           free: "#00a64d",
           adult: "#1b1a23",
@@ -42,12 +45,13 @@ export const dark = {
             background: "#1b1a23",
             textPrimary: "#e1e2eb",
             textSecondary: "#f31233",
-            icon: "#f31233",
+            icon: "#73727a",
           },
           recommendedCard: {
             background: "#1b1a23",
             text: "#e1e2eb",
-            icon: "#feaa2b",
+            iconSecondary: "#feaa2b",
+            iconPrimary: "#73727a",
           },
         },
       },

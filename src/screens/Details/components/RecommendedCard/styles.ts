@@ -11,6 +11,18 @@ export const Poster = styled.Image`
   border-radius: 12px;
 `;
 
+export const EmptyPoster = styled.View`
+  align-items: center;
+  justify-content: center;
+
+  width: ${SCREEN_WIDTH / 3}px;
+  height: ${SCREEN_WIDTH / 2}px;
+
+  background-color: ${({ theme }) =>
+    theme.colors.screens.details.components.recommendedCard.background};
+  border-radius: 12px;
+`;
+
 export const RatingCard = styled.View`
   flex-direction: row;
   align-items: center;

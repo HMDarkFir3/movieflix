@@ -2,7 +2,11 @@ import styled, { css } from "styled-components/native";
 import { Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-import { SCREEN_HEIGHT, STATUS_BAR_HEIGHT } from "@utils/variables";
+import {
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  STATUS_BAR_HEIGHT,
+} from "@utils/variables";
 
 export const Container = styled.View`
   flex: 1;
@@ -22,10 +26,24 @@ export const BackButton = styled(Pressable)`
 export const PosterWrapper = styled.View``;
 
 export const Poster = styled.Image`
-  height: ${SCREEN_HEIGHT / 1.5}px;
   width: 100%;
+  height: ${SCREEN_HEIGHT / 1.5}px;
 
   z-index: 1;
+`;
+
+export const EmptyPoster = styled.View`
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: ${SCREEN_HEIGHT / 1.5}px;
+
+  z-index: 1;
+
+  background-color: ${({ theme }) =>
+    theme.colors.screens.details.backgroundPrimary};
+  border-radius: 12px;
 `;
 
 export const Gradient = styled(LinearGradient)`
@@ -37,6 +55,19 @@ export const Gradient = styled(LinearGradient)`
   height: 108px;
 
   z-index: 2;
+`;
+
+export const Current = styled.Text`
+  position: absolute;
+  bottom: 12px;
+  right: 20px;
+
+  font-size: 16px;
+
+  ${({ theme }) => css`
+    font-family: ${theme.fonts.regular};
+    color: ${theme.colors.screens.details.textPrimary};
+  `}
 `;
 
 export const Header = styled.View`
