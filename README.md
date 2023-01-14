@@ -63,8 +63,9 @@ The project was developed using the following technologies:
 - [Expo](https://docs.expo.io)
 - [TypeScript](https://www.typescriptlang.org)
 - [React Navigation](https://reactnavigation.org)
-- [Axios](https://github.com/axios/axios)
+- [React Query](https://react-query-v3.tanstack.com/)
 - [Styled Components](https://styled-components.com)
+- [Phosphor Icons](https://phosphoricons.com/)
 
 ---
 
