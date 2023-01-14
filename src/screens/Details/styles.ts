@@ -2,7 +2,7 @@ import styled, { css } from "styled-components/native";
 import { Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-import { SCREEN_HEIGHT, STATUS_BAR_HEIGHT } from "@utils/variables";
+import { STATUS_BAR_HEIGHT } from "@utils/variables";
 
 import { getScreenSizeForMovieDetails } from "@utils/getScreenSizeForMovieDetails";
 

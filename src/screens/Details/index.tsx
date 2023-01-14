@@ -221,7 +221,6 @@ export const Details: FC = () => {
               </>
             )}
             showsVerticalScrollIndicator={false}
-            bounces={false}
           />
         </>
       )}
