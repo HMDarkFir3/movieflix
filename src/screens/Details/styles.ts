@@ -2,15 +2,14 @@ import styled, { css } from "styled-components/native";
 import { Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-import { STATUS_BAR_HEIGHT } from "@utils/variables";
+import { STATUS_BAR_HEIGHT } from "@utils/constants";
 
 import { getScreenSizeForMovieDetails } from "@utils/getScreenSizeForMovieDetails";
 
 export const Container = styled.View`
   flex: 1;
 
-  background-color: ${({ theme }) =>
-    theme.colors.screens.details.backgroundPrimary};
+  background-color: ${({ theme }) => theme.colors.background};
 `;
 
 export const BackButton = styled(Pressable)`
@@ -39,8 +38,7 @@ export const EmptyPoster = styled.View`
 
   z-index: 1;
 
-  background-color: ${({ theme }) =>
-    theme.colors.screens.details.backgroundPrimary};
+  background-color: ${({ theme }) => theme.colors.background};
   border-radius: 12px;
 `;
 
@@ -64,7 +62,7 @@ export const Current = styled.Text`
 
   ${({ theme }) => css`
     font-family: ${theme.fonts.regular};
-    color: ${theme.colors.screens.details.textPrimary};
+    color: ${theme.colors.text10};
   `}
 `;
 
@@ -90,8 +88,7 @@ export const RatingCard = styled.View`
 
   padding: 0 8px;
 
-  background-color: ${({ theme }) =>
-    theme.colors.screens.details.backgroundSecondary};
+  background-color: ${({ theme }) => theme.colors.secondary};
   border-radius: 8px;
 `;
 
@@ -101,7 +98,7 @@ export const Rating = styled.Text`
   font-size: 12px;
   ${({ theme }) => css`
     font-family: ${theme.fonts.bold};
-    color: ${theme.colors.screens.details.textPrimary};
+    color: ${theme.colors.text10};
   `}
 `;
 
@@ -116,7 +113,7 @@ export const Title = styled.Text`
   font-size: 16px;
   ${({ theme }) => css`
     font-family: ${theme.fonts.medium};
-    color: ${theme.colors.screens.details.textPrimary};
+    color: ${theme.colors.text10};
   `}
 `;
 
@@ -126,6 +123,6 @@ export const Overview = styled.Text`
   font-size: 16px;
   ${({ theme }) => css`
     font-family: ${theme.fonts.regular};
-    color: ${theme.colors.screens.details.textSecondary};
+    color: ${theme.colors.text60};
   `}
 `;

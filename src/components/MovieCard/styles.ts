@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components/native";
 
-import { SCREEN_WIDTH } from "@utils/variables";
+import { SCREEN_WIDTH } from "@utils/constants";
 
 export const Container = styled.Pressable``;
 
@@ -18,8 +18,7 @@ export const EmptyPoster = styled.View`
   width: ${SCREEN_WIDTH / 3}px;
   height: ${SCREEN_WIDTH / 2}px;
 
-  background-color: ${({ theme }) =>
-    theme.colors.screens.home.components.movieCard.background};
+  background-color: ${({ theme }) => theme.colors.secondary};
   border-radius: 12px;
 `;
 
@@ -36,8 +35,7 @@ export const RatingCard = styled.View`
 
   padding: 0 8px;
 
-  background-color: ${({ theme }) =>
-    theme.colors.screens.home.components.movieCard.background};
+  background-color: ${({ theme }) => theme.colors.secondary};
   border-radius: 8px;
 `;
 
@@ -47,7 +45,7 @@ export const Rating = styled.Text`
   font-size: 12px;
   ${({ theme }) => css`
     font-family: ${theme.fonts.bold};
-    color: ${theme.colors.screens.home.components.movieCard.text};
+    color: ${theme.colors.text10};
   `}
 `;
 
@@ -60,7 +58,7 @@ export const MovieCardTitle = styled.Text`
   font-size: 24px;
   ${({ theme }) => css`
     font-family: ${theme.fonts.bold};
-    color: ${theme.colors.screens.home.components.movieCard.text};
+    color: ${theme.colors.text10};
   `}
 `;
 

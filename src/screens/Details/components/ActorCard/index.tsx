@@ -36,10 +36,7 @@ export const ActorCard: FC<Props> = (props) => {
         />
       ) : (
         <EmptyPoster>
-          <FileX
-            size={28}
-            color={colors.screens.details.components.actorCard.icon}
-          />
+          <FileX size={28} color={colors.text60} />
         </EmptyPoster>
       )}
 

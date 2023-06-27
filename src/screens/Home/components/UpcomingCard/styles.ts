@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components/native";
 
-import { SCREEN_WIDTH } from "@utils/variables";
+import { SCREEN_WIDTH } from "@utils/constants";
 
 export const Container = styled.Pressable`
   width: ${SCREEN_WIDTH}px;
@@ -29,8 +29,7 @@ export const RatingCard = styled.View`
 
   padding: 0 8px;
 
-  background-color: ${({ theme }) =>
-    theme.colors.screens.home.components.upcomingCard.background};
+  background-color: ${({ theme }) => theme.colors.secondary};
   border-radius: 8px;
 `;
 
@@ -40,7 +39,7 @@ export const Rating = styled.Text`
   font-size: 12px;
   ${({ theme }) => css`
     font-family: ${theme.fonts.bold};
-    color: ${theme.colors.screens.home.components.upcomingCard.text};
+    color: ${theme.colors.text10};
   `}
 `;
 
@@ -52,7 +51,7 @@ export const Title = styled.Text`
   font-size: 16px;
   ${({ theme }) => css`
     font-family: ${theme.fonts.regular};
-    color: ${theme.colors.screens.home.components.upcomingCard.text};
+    color: ${theme.colors.text10};
   `}
 `;
 
@@ -66,6 +65,6 @@ export const UpcomingCardTitle = styled.Text`
   font-size: 24px;
   ${({ theme }) => css`
     font-family: ${theme.fonts.bold};
-    color: ${theme.colors.screens.home.components.upcomingCard.text};
+    color: ${theme.colors.text10};
   `}
 `;

@@ -1,12 +1,6 @@
-import * as StatusBar from "expo-status-bar";
-import * as NavigationBar from "expo-navigation-bar";
-import { useRef, useCallback, FC } from "react";
+import { useRef, FC } from "react";
 import { FlatList } from "react-native";
-import {
-  useNavigation,
-  useRoute,
-  useFocusEffect,
-} from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useQueries } from "react-query";
 import { useTheme } from "styled-components/native";
 import { ArrowLeft, Star, ListPlus, FileX } from "phosphor-react-native";
@@ -38,7 +32,6 @@ import {
 } from "@components/MovieCard";
 import { Loading } from "@components/Loading";
 
-import { IS_IOS } from "@utils/variables";
 import { formatCurrentMovie } from "@utils/formatCurrentMovie";
 
 import {
@@ -89,16 +82,6 @@ export const Details: FC = () => {
     navigate("Details", { id });
   };
 
-  useFocusEffect(
-    useCallback((): void => {
-      if (!IS_IOS) {
-        StatusBar.setStatusBarTranslucent(true);
-        NavigationBar.setBackgroundColorAsync(colors.navigationBar.background);
-        NavigationBar.setButtonStyleAsync("light");
-      }
-    }, [])
-  );
-
   return (
     <Container>
       {(movieDetails.isLoading || recommendedMovies.isLoading) && <Loading />}
@@ -106,11 +89,7 @@ export const Details: FC = () => {
       {movieDetails.isSuccess && recommendedMovies.isSuccess && (
         <>
           <BackButton onPress={onBackButtonPress}>
-            <ArrowLeft
-              size={24}
-              color={colors.screens.details.iconPrimary}
-              weight="bold"
-            />
+            <ArrowLeft size={24} color={colors.text10} weight="bold" />
           </BackButton>
 
           <FlatList
@@ -130,14 +109,11 @@ export const Details: FC = () => {
                     />
                   ) : (
                     <EmptyPoster>
-                      <FileX
-                        size={60}
-                        color={colors.screens.details.iconTertiary}
-                      />
+                      <FileX size={60} color={colors.text60} />
                     </EmptyPoster>
                   )}
 
-                  <Gradient colors={colors.screens.details.gradient}>
+                  <Gradient colors={colors.gradient}>
                     <Current>{currentMovie}</Current>
                   </Gradient>
                 </PosterWrapper>
@@ -145,21 +121,14 @@ export const Details: FC = () => {
                 <Header>
                   <Box>
                     <RatingCard>
-                      <Star
-                        size={16}
-                        color={colors.screens.details.iconSecondary}
-                        weight="fill"
-                      />
+                      <Star size={16} color={colors.star} weight="fill" />
                       <Rating>{rating.toFixed(1)}</Rating>
                     </RatingCard>
                   </Box>
 
                   <Box>
                     <AddListButton>
-                      <ListPlus
-                        size={24}
-                        color={colors.screens.details.iconPrimary}
-                      />
+                      <ListPlus size={24} color={colors.text10} />
                     </AddListButton>
                   </Box>
                 </Header>

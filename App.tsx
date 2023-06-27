@@ -6,6 +6,7 @@ import {
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
 import { FC } from "react";
+import { NavigationContainer } from "@react-navigation/native";
 import { QueryClientProvider } from "react-query";
 import { ThemeProvider } from "styled-components/native";
 
@@ -13,7 +14,7 @@ import { queryClient } from "@services/queryClient";
 
 import { StreamingProvider } from "@contexts/StreamingContext";
 
-import { Routes } from "@routes/index";
+import { Routes } from "@routes/index.routes";
 
 import { dark } from "@themes/dark";
 
@@ -29,12 +30,14 @@ export const App: FC = () => {
   SplashScreen.hideAsync();
 
   return (
-    <ThemeProvider theme={dark}>
+    <NavigationContainer>
       <QueryClientProvider client={queryClient}>
-        <StreamingProvider>
-          <Routes />
-        </StreamingProvider>
+        <ThemeProvider theme={dark}>
+          <StreamingProvider>
+            <Routes />
+          </StreamingProvider>
+        </ThemeProvider>
       </QueryClientProvider>
-    </ThemeProvider>
+    </NavigationContainer>
   );
 };

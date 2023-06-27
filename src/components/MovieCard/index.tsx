@@ -36,19 +36,12 @@ export const MovieCard: FC<Props> = (props) => {
         <Poster source={{ uri: `${apiImageUrl}${poster_path}` }} />
       ) : (
         <EmptyPoster>
-          <FileX
-            size={40}
-            color={colors.screens.home.components.movieCard.iconPrimary}
-          />
+          <FileX size={40} color={colors.text60} />
         </EmptyPoster>
       )}
 
       <RatingCard>
-        <Star
-          size={16}
-          color={colors.screens.home.components.movieCard.iconSecondary}
-          weight="fill"
-        />
+        <Star size={16} color={colors.star} weight="fill" />
         <Rating>{rating.toFixed(1)}</Rating>
       </RatingCard>
     </Container>

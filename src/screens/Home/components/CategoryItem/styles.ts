@@ -20,9 +20,7 @@ export const Title = styled.Text<TitleProps>`
   font-size: 16px;
   ${({ theme, isActive }) => css`
     font-family: ${theme.fonts.medium};
-    color: ${isActive
-      ? theme.colors.screens.home.components.categoryItem.isActive
-      : theme.colors.screens.home.components.categoryItem.isNotActive};
+    color: ${isActive ? theme.colors.primary : theme.colors.text10};
   `}
 `;
 

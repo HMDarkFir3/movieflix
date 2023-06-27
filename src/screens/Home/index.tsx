@@ -1,8 +1,6 @@
-import * as StatusBar from "expo-status-bar";
-import * as NavigationBar from "expo-navigation-bar";
-import { useCallback, FC } from "react";
+import { FC } from "react";
 import { FlatList } from "react-native";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useQueries } from "react-query";
 import { useTheme } from "styled-components/native";
 
@@ -31,7 +29,7 @@ import {
 } from "@components/MovieCard";
 import { Loading } from "@components/Loading";
 
-import { IS_IOS, STATUS_BAR_HEIGHT } from "@utils/variables";
+import { IS_IOS, STATUS_BAR_HEIGHT } from "@utils/constants";
 
 import { Container } from "./styles";
 
@@ -80,16 +78,6 @@ export const Home: FC = () => {
     streamingDispatch({ type: "SET_CATEGORY", payload: slug });
 
   const onNavigateToDetails = (id: number) => navigate("Details", { id });
-
-  useFocusEffect(
-    useCallback(() => {
-      if (!IS_IOS) {
-        StatusBar.setStatusBarTranslucent(true);
-        NavigationBar.setBackgroundColorAsync(colors.navigationBar.background);
-        NavigationBar.setButtonStyleAsync("light");
-      }
-    }, [])
-  );
 
   return (
     <Container>

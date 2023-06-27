@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components/native";
 
-import { SCREEN_WIDTH } from "@utils/variables";
+import { SCREEN_WIDTH } from "@utils/constants";
 
 export const Container = styled.View``;
 
@@ -18,8 +18,7 @@ export const EmptyPoster = styled.View`
   width: ${SCREEN_WIDTH / 3}px;
   height: ${SCREEN_WIDTH / 2}px;
 
-  background-color: ${({ theme }) =>
-    theme.colors.screens.details.components.actorCard.background};
+  background-color: ${({ theme }) => theme.colors.secondary};
   border-radius: 12px;
 `;
 
@@ -31,14 +30,14 @@ export const Name = styled.Text`
   font-size: 16px;
   ${({ theme }) => css`
     font-family: ${theme.fonts.medium};
-    color: ${theme.colors.screens.details.components.actorCard.textPrimary};
+    color: ${theme.colors.text10};
   `}
 `;
 
 export const How = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.fonts.regular};
-    color: ${theme.colors.screens.details.components.actorCard.textSecondary};
+    color: ${theme.colors.primary};
   `}
 `;
 
@@ -50,7 +49,7 @@ export const Character = styled.Text`
   font-size: 16px;
   ${({ theme }) => css`
     font-family: ${theme.fonts.medium};
-    color: ${theme.colors.screens.details.components.actorCard.textPrimary};
+    color: ${theme.colors.text10};
   `}
 `;
 
@@ -63,7 +62,7 @@ export const ActorCardTitle = styled.Text`
   font-size: 16px;
   ${({ theme }) => css`
     font-family: ${theme.fonts.medium};
-    color: ${theme.colors.screens.details.components.actorCard.textPrimary};
+    color: ${theme.colors.text10};
   `}
 `;
 
