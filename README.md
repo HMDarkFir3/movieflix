@@ -34,7 +34,7 @@ To clone and run this app, you will need to [Git](https://git-scm.com), [NodeJs]
 $ git clone https://github.com/HMDarkFir3/movieflix.git
 
 # Access the project folder in the terminal/cmd
-$ cd movie-app
+$ cd movieflix
 ```
 
 ### 🎲 Running the Application
