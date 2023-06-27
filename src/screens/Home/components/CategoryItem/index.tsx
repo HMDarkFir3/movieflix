@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { PressableProps } from "react-native";
+import { RectButtonProps } from "react-native-gesture-handler";
 
 import { Container, Title, CategoryItemWrapper } from "./styles";
 
-interface Props extends PressableProps {
+interface Props extends RectButtonProps {
   title: string;
   isActive: boolean;
 }

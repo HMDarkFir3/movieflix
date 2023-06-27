@@ -65,7 +65,3 @@ export const ActorCardTitle = styled.Text`
     color: ${theme.colors.text10};
   `}
 `;
-
-export const ActorCardSeparator = styled.View`
-  margin-left: 16px;
-`;

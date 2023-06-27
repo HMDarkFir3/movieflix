@@ -16,19 +16,16 @@ import {
   GenreCard,
   GenreCardWrapper,
   GenreCardTitle,
-  GenreCardSeparator,
 } from "@components-of-screens/Details/components/GenreCard";
 import {
   ActorCard,
   ActorCardWrapper,
   ActorCardTitle,
-  ActorCardSeparator,
 } from "@components-of-screens/Details/components/ActorCard";
 import {
   MovieCard,
   MovieCardWrapper,
   MovieCardTitle,
-  MovieCardSeparator,
 } from "@components/MovieCard";
 import { Loading } from "@components/Loading";
 
@@ -138,11 +135,12 @@ export const Details: FC = () => {
 
                   <FlatList
                     style={{ marginTop: 12 }}
+                    contentContainerStyle={{ gap: 8 }}
                     data={movieDetails.data?.genres}
                     keyExtractor={(item) => String(item.id)}
                     renderItem={({ item }) => <GenreCard title={item.name} />}
-                    ItemSeparatorComponent={() => <GenreCardSeparator />}
                     horizontal
+                    showsHorizontalScrollIndicator={false}
                   />
                 </GenreCardWrapper>
 
@@ -157,10 +155,10 @@ export const Details: FC = () => {
 
                     <FlatList
                       style={{ marginTop: 12 }}
+                      contentContainerStyle={{ gap: 16 }}
                       data={movieCredits.data?.cast}
                       keyExtractor={(item) => String(item.id)}
                       renderItem={({ item }) => <ActorCard data={item} />}
-                      ItemSeparatorComponent={() => <ActorCardSeparator />}
                       horizontal
                       showsHorizontalScrollIndicator={false}
                     />
@@ -173,6 +171,7 @@ export const Details: FC = () => {
 
                     <FlatList
                       style={{ marginTop: 12 }}
+                      contentContainerStyle={{ gap: 16 }}
                       data={recommendedMovies.data?.results}
                       keyExtractor={(item) => String(item.id)}
                       renderItem={({ item }) => (
@@ -181,7 +180,6 @@ export const Details: FC = () => {
                           onPress={() => onNavigateToMovieDetails(item.id)}
                         />
                       )}
-                      ItemSeparatorComponent={() => <MovieCardSeparator />}
                       horizontal
                       showsHorizontalScrollIndicator={false}
                     />

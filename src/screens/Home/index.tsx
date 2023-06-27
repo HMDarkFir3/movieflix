@@ -25,7 +25,6 @@ import {
   MovieCard,
   MovieCardWrapper,
   MovieCardTitle,
-  MovieCardSeparator,
 } from "@components/MovieCard";
 import { Loading } from "@components/Loading";
 
@@ -138,6 +137,7 @@ export const Home: FC = () => {
 
                   <FlatList
                     style={{ marginTop: 16 }}
+                    contentContainerStyle={{ gap: 16 }}
                     data={popularMovies.data?.results}
                     keyExtractor={(item) => String(item.id)}
                     renderItem={({ item }) => (
@@ -146,7 +146,6 @@ export const Home: FC = () => {
                         onPress={() => onNavigateToDetails(item.id)}
                       />
                     )}
-                    ItemSeparatorComponent={() => <MovieCardSeparator />}
                     horizontal
                     showsHorizontalScrollIndicator={false}
                   />
@@ -159,6 +158,7 @@ export const Home: FC = () => {
 
                   <FlatList
                     style={{ marginTop: 16 }}
+                    contentContainerStyle={{ gap: 16 }}
                     data={topRatedMovies.data?.results}
                     keyExtractor={(item) => String(item.id)}
                     renderItem={({ item }) => (
@@ -167,7 +167,6 @@ export const Home: FC = () => {
                         onPress={() => onNavigateToDetails(item.id)}
                       />
                     )}
-                    ItemSeparatorComponent={() => <MovieCardSeparator />}
                     horizontal
                     showsHorizontalScrollIndicator={false}
                   />

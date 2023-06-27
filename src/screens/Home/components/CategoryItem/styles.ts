@@ -1,18 +1,14 @@
 import styled, { css } from "styled-components/native";
-import { PressableProps } from "react-native";
+import { RectButton } from "react-native-gesture-handler";
 
 interface TitleProps {
   isActive: boolean;
 }
 
-export const Container = styled.Pressable.attrs<PressableProps>(
-  ({ theme }) => ({
-    android_ripple: {
-      color: theme.colors.androidRipple.primary,
-    },
-  })
-)`
+export const Container = styled(RectButton)`
   padding: 8px 12px;
+
+  background-color: ${({ theme }) => theme.colors.background};
 `;
 
 export const Title = styled.Text<TitleProps>`

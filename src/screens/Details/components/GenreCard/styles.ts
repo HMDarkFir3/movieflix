@@ -27,7 +27,3 @@ export const GenreCardTitle = styled.Text`
     color: ${theme.colors.text10};
   `}
 `;
-
-export const GenreCardSeparator = styled.View`
-  margin-left: 12px;
-`;

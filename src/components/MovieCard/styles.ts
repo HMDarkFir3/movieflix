@@ -61,7 +61,3 @@ export const MovieCardTitle = styled.Text`
     color: ${theme.colors.text10};
   `}
 `;
-
-export const MovieCardSeparator = styled.View`
-  margin-left: 16px;
-`;

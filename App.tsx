@@ -8,6 +8,7 @@ import {
 import { FC } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClientProvider } from "react-query";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ThemeProvider } from "styled-components/native";
 
 import { queryClient } from "@services/queryClient";
@@ -34,7 +35,9 @@ export const App: FC = () => {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={dark}>
           <StreamingProvider>
-            <Routes />
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <Routes />
+            </GestureHandlerRootView>
           </StreamingProvider>
         </ThemeProvider>
       </QueryClientProvider>
