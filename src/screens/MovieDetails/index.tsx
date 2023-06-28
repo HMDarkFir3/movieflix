@@ -1,24 +1,23 @@
 import { useRef, FC } from "react";
 import { FlatList } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { useQueries } from "react-query";
 import { useTheme } from "styled-components/native";
 import { ArrowLeft, Star, ListPlus, FileX } from "phosphor-react-native";
 
 import { apiImageUrl } from "@services/api";
 
-import { useDetailsRequest } from "@hooks/useDetailsRequest";
+import { useDetailsRequest } from "@hooks/Movie/useDetailsRequest";
 
 import {
   GenreCard,
   GenreCardWrapper,
   GenreCardTitle,
-} from "@components-of-screens/Details/components/GenreCard";
+} from "@components/GenreCard";
 import {
   ActorCard,
   ActorCardWrapper,
   ActorCardTitle,
-} from "@components-of-screens/Details/components/ActorCard";
+} from "@components-of-screens/MovieDetails/components/ActorCard";
 import {
   MovieCard,
   MovieCardWrapper,
@@ -50,15 +49,13 @@ interface Params {
   id: number;
 }
 
-export const Details: FC = () => {
+export const MovieDetails: FC = () => {
   const { navigate, goBack } = useNavigation();
   const route = useRoute();
   const { id } = route.params as Params;
   const { movieDetails, movieCredits, recommendedMovies } =
     useDetailsRequest(id);
   const { colors } = useTheme();
-
-  console.log(id);
 
   const flatListRef = useRef<FlatList>(null);
 
@@ -69,7 +66,7 @@ export const Details: FC = () => {
 
   const onNavigateToMovieDetails = (id: number): void => {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
-    navigate("Details", { id });
+    navigate("MovieDetails", { id });
   };
 
   return (

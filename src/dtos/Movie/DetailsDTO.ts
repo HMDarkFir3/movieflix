@@ -1,4 +1,4 @@
-export namespace MovieDetailsDTO {
+export namespace DetailsDTO {
   interface Genre {
     id: number;
     name: string;

@@ -1,12 +1,6 @@
 import { FC } from "react";
 
-import {
-  Container,
-  Title,
-  GenreCardWrapper,
-  GenreCardTitle,
-  GenreCardSeparator,
-} from "./styles";
+import { Container, Title, GenreCardWrapper, GenreCardTitle } from "./styles";
 
 interface Props {
   title: string;
@@ -22,4 +16,4 @@ export const GenreCard: FC<Props> = (props) => {
   );
 };
 
-export { GenreCardWrapper, GenreCardTitle, GenreCardSeparator };
+export { GenreCardWrapper, GenreCardTitle };

@@ -1,7 +1,7 @@
 import { api } from "@services/api";
 
 import { MoviesDTO } from "@dtos/Movie/MoviesDTO";
-import { MovieDetailsDTO } from "@dtos/Movie/MovieDetailsDTO";
+import { DetailsDTO } from "@dtos/Movie/DetailsDTO";
 import { CreditsDTO } from "@dtos/Movie/CreditsDTO";
 
 const getUpcomingMovies = async () => {
@@ -20,7 +20,7 @@ const getTopRatedMovies = async () => {
 };
 
 const getMovieDetails = async (movieId: number) => {
-  const response = await api.get<MovieDetailsDTO.Response>(`/movie/${movieId}`);
+  const response = await api.get<DetailsDTO.Response>(`/movie/${movieId}`);
   return response.data;
 };
 
