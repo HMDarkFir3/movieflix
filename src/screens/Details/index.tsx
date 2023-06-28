@@ -5,12 +5,9 @@ import { useQueries } from "react-query";
 import { useTheme } from "styled-components/native";
 import { ArrowLeft, Star, ListPlus, FileX } from "phosphor-react-native";
 
-import {
-  getMovieDetails,
-  getMovieCredits,
-  getRecommendedMovies,
-} from "@services/movies";
 import { apiImageUrl } from "@services/api";
+
+import { useDetailsRequest } from "@hooks/useDetailsRequest";
 
 import {
   GenreCard,
@@ -57,15 +54,11 @@ export const Details: FC = () => {
   const { navigate, goBack } = useNavigation();
   const route = useRoute();
   const { id } = route.params as Params;
-  const [movieDetails, movieCredits, recommendedMovies] = useQueries([
-    { queryKey: ["movieDetails", id], queryFn: () => getMovieDetails(id) },
-    { queryKey: ["movieCredits", id], queryFn: () => getMovieCredits(id) },
-    {
-      queryKey: ["recommendedMovies", id],
-      queryFn: () => getRecommendedMovies(id),
-    },
-  ]);
+  const { movieDetails, movieCredits, recommendedMovies } =
+    useDetailsRequest(id);
   const { colors } = useTheme();
+
+  console.log(id);
 
   const flatListRef = useRef<FlatList>(null);
 

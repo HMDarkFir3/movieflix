@@ -5,18 +5,18 @@ export default ({ config }) => {
     case "development": {
       return {
         ...config,
-        name: "Movie App (DEVELOPMENT)",
+        name: "Movieflix (DEVELOPMENT)",
         android: {
-          package: "com.hmdarkfire.movieapp.development",
+          package: "com.hmdarkfire.movieflix.development",
         },
       };
     }
     case "preview": {
       return {
         ...config,
-        name: "Movie App (PREVIEW)",
+        name: "Movieflix (PREVIEW)",
         android: {
-          package: "com.hmdarkfire.movieapp.preview",
+          package: "com.hmdarkfire.movieflix.preview",
         },
       };
     }

@@ -5,6 +5,7 @@ import { FileX, Star } from "phosphor-react-native";
 
 import { apiImageUrl } from "@services/api";
 
+import { SeriesDTO } from "@dtos/Serie/SeriesDTO";
 import { MoviesDTO } from "@dtos/Movie/MoviesDTO";
 
 import {
@@ -15,11 +16,10 @@ import {
   Rating,
   MovieCardWrapper,
   MovieCardTitle,
-  MovieCardSeparator,
 } from "./styles";
 
 interface Props extends PressableProps {
-  data: MoviesDTO.Result;
+  data: MoviesDTO.Result | SeriesDTO.Result;
 }
 
 export const MovieCard: FC<Props> = (props) => {
@@ -48,4 +48,4 @@ export const MovieCard: FC<Props> = (props) => {
   );
 };
 
-export { MovieCardWrapper, MovieCardTitle, MovieCardSeparator };
+export { MovieCardWrapper, MovieCardTitle };

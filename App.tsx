@@ -13,8 +13,6 @@ import { ThemeProvider } from "styled-components/native";
 
 import { queryClient } from "@services/queryClient";
 
-import { StreamingProvider } from "@contexts/StreamingContext";
-
 import { Routes } from "@routes/index.routes";
 
 import { dark } from "@themes/dark";
@@ -34,11 +32,9 @@ export const App: FC = () => {
     <NavigationContainer>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={dark}>
-          <StreamingProvider>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <Routes />
-            </GestureHandlerRootView>
-          </StreamingProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <Routes />
+          </GestureHandlerRootView>
         </ThemeProvider>
       </QueryClientProvider>
     </NavigationContainer>

@@ -12,7 +12,7 @@ export const CategoryItem: FC<Props> = (props) => {
   const { title, isActive, ...rest } = props;
 
   return (
-    <Container {...rest}>
+    <Container isActive={isActive} {...rest}>
       <Title isActive={isActive}>{title}</Title>
     </Container>
   );

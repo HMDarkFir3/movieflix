@@ -1,16 +1,9 @@
-import { FC } from "react";
+import { useState, FC } from "react";
 import { FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useQueries } from "react-query";
-import { useTheme } from "styled-components/native";
 
-import {
-  getUpcomingMovies,
-  getPopularMovies,
-  getTopRatedMovies,
-} from "@services/movies";
-
-import { useStreaming } from "@hooks/useStreaming";
+import { useSeriesRequest } from "@hooks/useSeriesRequest";
+import { useMoviesRequest } from "@hooks/useMoviesRequest";
 
 import {
   CategoryItem,
@@ -28,53 +21,26 @@ import {
 } from "@components/MovieCard";
 import { Loading } from "@components/Loading";
 
-import { IS_IOS, STATUS_BAR_HEIGHT } from "@utils/constants";
+import { categories } from "@utils/categories";
+import { STATUS_BAR_HEIGHT } from "@utils/constants";
 
 import { Container } from "./styles";
 
-const categories = [
-  {
-    id: 1,
-    title: "series",
-    slug: "tv",
-  },
-  {
-    id: 2,
-    title: "film",
-    slug: "movie",
-  },
-  {
-    id: 3,
-    title: "my list",
-    slug: "my-list",
-  },
-];
-
 export const Home: FC = () => {
-  const { state: streamingState, dispatch: streamingDispatch } = useStreaming();
+  const [category, setCategory] = useState<"series" | "movies" | "my-list">(
+    "movies"
+  );
+
+  const { airingTodaySeries, onTheAirSeries, popularSeries, topRatedSeries } =
+    useSeriesRequest(category === "series");
+  const { upcomingMovies, popularMovies, topRatedMovies } = useMoviesRequest(
+    category === "movies"
+  );
+
   const { navigate } = useNavigation();
-  const [upcomingMovies, popularMovies, topRatedMovies] = useQueries([
-    {
-      queryKey: "upcomingMovies",
-      queryFn: () => getUpcomingMovies(),
-      enabled: streamingState.category === "movie",
-    },
-    {
-      queryKey: "popularMovies",
-      queryFn: () => getPopularMovies(),
-      enabled: streamingState.category === "movie",
-    },
-    {
-      queryKey: "topRatedMovies",
-      queryFn: () => getTopRatedMovies(),
-      enabled: streamingState.category === "movie",
-    },
-  ]);
 
-  const { colors } = useTheme();
-
-  const onSelectedCategory = (slug: "tv" | "movie" | "my-list") =>
-    streamingDispatch({ type: "SET_CATEGORY", payload: slug });
+  const onSelectedCategory = (slug: "series" | "movies" | "my-list") =>
+    setCategory(slug);
 
   const onNavigateToDetails = (id: number) => navigate("Details", { id });
 
@@ -89,9 +55,9 @@ export const Home: FC = () => {
           renderItem={({ item }) => (
             <CategoryItem
               title={item.title}
-              isActive={streamingState.category === item.slug}
+              isActive={category === item.slug}
               onPress={() =>
-                onSelectedCategory(item.slug as "tv" | "movie" | "my-list")
+                onSelectedCategory(item.slug as "series" | "movies" | "my-list")
               }
             />
           )}
@@ -100,82 +66,191 @@ export const Home: FC = () => {
         />
       </CategoryItemWrapper>
 
-      {upcomingMovies.isLoading ||
-      popularMovies.isLoading ||
-      topRatedMovies.isLoading ? (
-        <Loading />
-      ) : (
-        <FlatList
-          contentContainerStyle={{ paddingBottom: 20 }}
-          data={[0]}
-          keyExtractor={(item) => String(item)}
-          renderItem={() => (
-            <>
-              {upcomingMovies.isSuccess && (
-                <UpcomingCardWrapper>
-                  <UpcomingCardTitle>Coming Soon:</UpcomingCardTitle>
-                  <FlatList
-                    style={{ marginTop: 16 }}
-                    data={upcomingMovies.data?.results}
-                    keyExtractor={(item) => String(item.id)}
-                    renderItem={({ item }) => (
-                      <UpcomingCard
-                        data={item}
-                        onPress={() => onNavigateToDetails(item.id)}
+      {category === "series" && (
+        <>
+          {airingTodaySeries.isLoading ||
+          onTheAirSeries.isLoading ||
+          popularSeries.isLoading ||
+          topRatedSeries.isLoading ? (
+            <Loading />
+          ) : (
+            <FlatList
+              contentContainerStyle={{ paddingBottom: 20 }}
+              data={[0]}
+              keyExtractor={(item) => String(item)}
+              renderItem={() => (
+                <>
+                  {airingTodaySeries.isSuccess && (
+                    <MovieCardWrapper>
+                      <MovieCardTitle>Airing Today</MovieCardTitle>
+
+                      <FlatList
+                        style={{ marginTop: 16 }}
+                        contentContainerStyle={{ gap: 16 }}
+                        data={airingTodaySeries.data.results}
+                        keyExtractor={(item) => String(item.id)}
+                        renderItem={({ item }) => (
+                          <MovieCard
+                            data={item}
+                            onPress={() => onNavigateToDetails(item.id)}
+                          />
+                        )}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
                       />
-                    )}
-                    showsHorizontalScrollIndicator={false}
-                    horizontal
-                    pagingEnabled
-                  />
-                </UpcomingCardWrapper>
-              )}
+                    </MovieCardWrapper>
+                  )}
 
-              {popularMovies.isSuccess && (
-                <MovieCardWrapper>
-                  <MovieCardTitle>Popular:</MovieCardTitle>
+                  {onTheAirSeries.isSuccess && (
+                    <MovieCardWrapper>
+                      <MovieCardTitle>On The Air</MovieCardTitle>
 
-                  <FlatList
-                    style={{ marginTop: 16 }}
-                    contentContainerStyle={{ gap: 16 }}
-                    data={popularMovies.data?.results}
-                    keyExtractor={(item) => String(item.id)}
-                    renderItem={({ item }) => (
-                      <MovieCard
-                        data={item}
-                        onPress={() => onNavigateToDetails(item.id)}
+                      <FlatList
+                        style={{ marginTop: 16 }}
+                        contentContainerStyle={{ gap: 16 }}
+                        data={onTheAirSeries.data.results}
+                        keyExtractor={(item) => String(item.id)}
+                        renderItem={({ item }) => (
+                          <MovieCard
+                            data={item}
+                            onPress={() => onNavigateToDetails(item.id)}
+                          />
+                        )}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
                       />
-                    )}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                  />
-                </MovieCardWrapper>
-              )}
+                    </MovieCardWrapper>
+                  )}
 
-              {topRatedMovies.isSuccess && (
-                <MovieCardWrapper>
-                  <MovieCardTitle>Top Rated:</MovieCardTitle>
+                  {popularSeries.isSuccess && (
+                    <MovieCardWrapper>
+                      <MovieCardTitle>Popular</MovieCardTitle>
 
-                  <FlatList
-                    style={{ marginTop: 16 }}
-                    contentContainerStyle={{ gap: 16 }}
-                    data={topRatedMovies.data?.results}
-                    keyExtractor={(item) => String(item.id)}
-                    renderItem={({ item }) => (
-                      <MovieCard
-                        data={item}
-                        onPress={() => onNavigateToDetails(item.id)}
+                      <FlatList
+                        style={{ marginTop: 16 }}
+                        contentContainerStyle={{ gap: 16 }}
+                        data={popularSeries.data.results}
+                        keyExtractor={(item) => String(item.id)}
+                        renderItem={({ item }) => (
+                          <MovieCard
+                            data={item}
+                            onPress={() => onNavigateToDetails(item.id)}
+                          />
+                        )}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
                       />
-                    )}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                  />
-                </MovieCardWrapper>
+                    </MovieCardWrapper>
+                  )}
+
+                  {topRatedSeries.isSuccess && (
+                    <MovieCardWrapper>
+                      <MovieCardTitle>Top Rated</MovieCardTitle>
+
+                      <FlatList
+                        style={{ marginTop: 16 }}
+                        contentContainerStyle={{ gap: 16 }}
+                        data={topRatedSeries.data.results}
+                        keyExtractor={(item) => String(item.id)}
+                        renderItem={({ item }) => (
+                          <MovieCard
+                            data={item}
+                            onPress={() => onNavigateToDetails(item.id)}
+                          />
+                        )}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                      />
+                    </MovieCardWrapper>
+                  )}
+                </>
               )}
-            </>
+              showsVerticalScrollIndicator={false}
+            />
           )}
-          showsVerticalScrollIndicator={false}
-        />
+        </>
+      )}
+
+      {category === "movies" && (
+        <>
+          {upcomingMovies.isLoading ||
+          popularMovies.isLoading ||
+          topRatedMovies.isLoading ? (
+            <Loading />
+          ) : (
+            <FlatList
+              contentContainerStyle={{ paddingBottom: 20 }}
+              data={[0]}
+              keyExtractor={(item) => String(item)}
+              renderItem={() => (
+                <>
+                  {upcomingMovies.isSuccess && (
+                    <UpcomingCardWrapper>
+                      <UpcomingCardTitle>Coming Soon</UpcomingCardTitle>
+                      <FlatList
+                        style={{ marginTop: 16 }}
+                        data={upcomingMovies.data.results}
+                        keyExtractor={(item) => String(item.id)}
+                        renderItem={({ item }) => (
+                          <UpcomingCard
+                            data={item}
+                            onPress={() => onNavigateToDetails(item.id)}
+                          />
+                        )}
+                        showsHorizontalScrollIndicator={false}
+                        horizontal
+                        pagingEnabled
+                      />
+                    </UpcomingCardWrapper>
+                  )}
+
+                  {popularMovies.isSuccess && (
+                    <MovieCardWrapper>
+                      <MovieCardTitle>Popular</MovieCardTitle>
+
+                      <FlatList
+                        style={{ marginTop: 16 }}
+                        contentContainerStyle={{ gap: 16 }}
+                        data={popularMovies.data.results}
+                        keyExtractor={(item) => String(item.id)}
+                        renderItem={({ item }) => (
+                          <MovieCard
+                            data={item}
+                            onPress={() => onNavigateToDetails(item.id)}
+                          />
+                        )}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                      />
+                    </MovieCardWrapper>
+                  )}
+
+                  {topRatedMovies.isSuccess && (
+                    <MovieCardWrapper>
+                      <MovieCardTitle>Top Rated</MovieCardTitle>
+
+                      <FlatList
+                        style={{ marginTop: 16 }}
+                        contentContainerStyle={{ gap: 16 }}
+                        data={topRatedMovies.data.results}
+                        keyExtractor={(item) => String(item.id)}
+                        renderItem={({ item }) => (
+                          <MovieCard
+                            data={item}
+                            onPress={() => onNavigateToDetails(item.id)}
+                          />
+                        )}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                      />
+                    </MovieCardWrapper>
+                  )}
+                </>
+              )}
+              showsVerticalScrollIndicator={false}
+            />
+          )}
+        </>
       )}
     </Container>
   );

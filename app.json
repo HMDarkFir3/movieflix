@@ -1,6 +1,7 @@
 {
   "expo": {
-    "slug": "movie-app",
+    "name": "movieflix",
+    "slug": "movieflix",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
