@@ -1,15 +1,9 @@
-import { FC } from "react";
-import { RectButtonProps } from "react-native-gesture-handler";
+import { FC } from 'react';
+import { RectButtonProps } from 'react-native-gesture-handler';
 
-import { DetailsDTO } from "@dtos/Serie/DetalsDTO";
+import { DetailsDTO } from '@dtos/Serie/DetalsDTO';
 
-import {
-  Container,
-  Wrapper,
-  Name,
-  SeasonCardWrapper,
-  SeasonCardTitle,
-} from "./styles";
+import { Container, Wrapper, Name, SeasonCardWrapper, SeasonCardTitle } from './styles';
 
 interface Props extends RectButtonProps {
   data: DetailsDTO.Season;

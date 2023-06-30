@@ -1,10 +1,10 @@
-import styled, { css } from "styled-components/native";
-import { Pressable } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import styled, { css } from 'styled-components/native';
+import { Pressable } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
-import { STATUS_BAR_HEIGHT } from "@utils/constants";
+import { STATUS_BAR_HEIGHT } from '@utils/constants';
 
-import { getScreenSizeForMovieDetails } from "@utils/getScreenSizeForMovieDetails";
+import { getScreenSizeForMovieDetails } from '@utils/getScreenSizeForMovieDetails';
 
 export const Container = styled.View`
   flex: 1;

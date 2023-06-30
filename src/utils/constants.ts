@@ -1,11 +1,8 @@
-import { Dimensions, Platform } from "react-native";
-import {
-  getStatusBarHeight,
-  getBottomSpace,
-} from "react-native-iphone-x-helper";
+import { Dimensions, Platform } from 'react-native';
+import { getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
-const IS_IOS = Platform.OS === "ios";
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen');
+const IS_IOS = Platform.OS === 'ios';
 const STATUS_BAR_HEIGHT = getStatusBarHeight();
 const BOTTOM_SPACE = getBottomSpace();
 

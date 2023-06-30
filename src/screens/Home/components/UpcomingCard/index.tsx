@@ -1,11 +1,11 @@
-import { FC } from "react";
-import { PressableProps } from "react-native";
-import { useTheme } from "styled-components/native";
-import { Star } from "phosphor-react-native";
+import { FC } from 'react';
+import { PressableProps } from 'react-native';
+import { useTheme } from 'styled-components/native';
+import { Star } from 'phosphor-react-native';
 
-import { apiImageUrl } from "@services/api";
+import { apiImageUrl } from '@services/api';
 
-import { MoviesDTO } from "@dtos/Movie/MoviesDTO";
+import { MoviesDTO } from '@dtos/Movie/MoviesDTO';
 
 import {
   Container,
@@ -16,7 +16,7 @@ import {
   Title,
   UpcomingCardWrapper,
   UpcomingCardTitle,
-} from "./styles";
+} from './styles';
 
 interface Props extends PressableProps {
   data: MoviesDTO.Result;
@@ -33,10 +33,7 @@ export const UpcomingCard: FC<Props> = (props) => {
   return (
     <Container {...rest}>
       <Wrapper>
-        <Poster
-          source={{ uri: `${apiImageUrl}${backdrop_path}` }}
-          resizeMode="contain"
-        />
+        <Poster source={{ uri: `${apiImageUrl}${backdrop_path}` }} resizeMode="contain" />
 
         <RatingCard>
           <Star size={16} color={colors.star} weight="fill" />

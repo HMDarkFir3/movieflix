@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import { Container, Title, GenreCardWrapper, GenreCardTitle } from "./styles";
+import { Container, Title, GenreCardWrapper, GenreCardTitle } from './styles';
 
 interface Props {
   title: string;

@@ -1,25 +1,21 @@
-import { useQueries } from "react-query";
+import { useQueries } from 'react-query';
 
-import {
-  getUpcomingMovies,
-  getPopularMovies,
-  getTopRatedMovies,
-} from "@services/movies";
+import { getUpcomingMovies, getPopularMovies, getTopRatedMovies } from '@services/movies';
 
 const useMoviesRequest = (enabled: boolean) => {
   const [upcomingMovies, popularMovies, topRatedMovies] = useQueries([
     {
-      queryKey: "upcomingMovies",
+      queryKey: 'upcomingMovies',
       queryFn: () => getUpcomingMovies(),
       enabled,
     },
     {
-      queryKey: "popularMovies",
+      queryKey: 'popularMovies',
       queryFn: () => getPopularMovies(),
       enabled,
     },
     {
-      queryKey: "topRatedMovies",
+      queryKey: 'topRatedMovies',
       queryFn: () => getTopRatedMovies(),
       enabled,
     },

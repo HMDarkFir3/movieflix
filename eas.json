@@ -5,7 +5,10 @@
   "build": {
     "development": {
       "env": {
-        "APP_ENV": "development"
+        "APP_ENV": "development",
+        "API_URL": "https://api.themoviedb.org/3",
+        "API_IMAGE_URL": "https://image.tmdb.org/t/p/original",
+        "API_KEY": "0c0022784169f05724bd271bfbac8521"
       },
       "distribution": "internal",
       "android": {
@@ -16,7 +19,10 @@
     },
     "preview": {
       "env": {
-        "APP_ENV": "preview"
+        "APP_ENV": "preview",
+        "API_URL": "https://api.themoviedb.org/3",
+        "API_IMAGE_URL": "https://image.tmdb.org/t/p/original",
+        "API_KEY": "0c0022784169f05724bd271bfbac8521"
       },
       "distribution": "internal",
       "android": {

@@ -1,12 +1,12 @@
-import { FC } from "react";
-import { PressableProps } from "react-native";
-import { useTheme } from "styled-components/native";
-import { FileX, Star } from "phosphor-react-native";
+import { FC } from 'react';
+import { PressableProps } from 'react-native';
+import { useTheme } from 'styled-components/native';
+import { FileX, Star } from 'phosphor-react-native';
 
-import { apiImageUrl } from "@services/api";
+import { apiImageUrl } from '@services/api';
 
-import { SeriesDTO } from "@dtos/Serie/SeriesDTO";
-import { MoviesDTO } from "@dtos/Movie/MoviesDTO";
+import { SeriesDTO } from '@dtos/Serie/SeriesDTO';
+import { MoviesDTO } from '@dtos/Movie/MoviesDTO';
 
 import {
   Container,
@@ -16,7 +16,7 @@ import {
   Rating,
   MovieCardWrapper,
   MovieCardTitle,
-} from "./styles";
+} from './styles';
 
 interface Props extends PressableProps {
   data: MoviesDTO.Result | SeriesDTO.Result;

@@ -1,67 +1,55 @@
-import { useState, FC } from "react";
-import { FlatList } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useState, FC } from 'react';
+import { FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-import { useSeriesRequest } from "@hooks/Serie/useSeriesRequest";
-import { useMoviesRequest } from "@hooks/Movie/useMoviesRequest";
+import { useSeriesRequest } from '@hooks/Serie/useSeriesRequest';
+import { useMoviesRequest } from '@hooks/Movie/useMoviesRequest';
 
 import {
   CategoryItem,
   CategoryItemWrapper,
-} from "@components-of-screens/Home/components/CategoryItem";
+} from '@components-of-screens/Home/components/CategoryItem';
 import {
   UpcomingCard,
   UpcomingCardWrapper,
   UpcomingCardTitle,
-} from "@components-of-screens/Home/components/UpcomingCard";
-import {
-  MovieCard,
-  MovieCardWrapper,
-  MovieCardTitle,
-} from "@components/MovieCard";
-import { Loading } from "@components/Loading";
+} from '@components-of-screens/Home/components/UpcomingCard';
+import { MovieCard, MovieCardWrapper, MovieCardTitle } from '@components/MovieCard';
+import { Loading } from '@components/Loading';
 
-import { categories } from "@utils/categories";
-import { STATUS_BAR_HEIGHT } from "@utils/constants";
+import { categories } from '@utils/categories';
+import { STATUS_BAR_HEIGHT } from '@utils/constants';
 
-import { Container } from "./styles";
+import { Container } from './styles';
 
 export const Home: FC = () => {
-  const [category, setCategory] = useState<"series" | "movies" | "my-list">(
-    "movies"
-  );
+  const [category, setCategory] = useState<'series' | 'movies' | 'my-list'>('movies');
 
-  const { airingTodaySeries, onTheAirSeries, popularSeries, topRatedSeries } =
-    useSeriesRequest(category === "series");
-  const { upcomingMovies, popularMovies, topRatedMovies } = useMoviesRequest(
-    category === "movies"
+  const { airingTodaySeries, onTheAirSeries, popularSeries, topRatedSeries } = useSeriesRequest(
+    category === 'series'
   );
+  const { upcomingMovies, popularMovies, topRatedMovies } = useMoviesRequest(category === 'movies');
 
   const { navigate } = useNavigation();
 
-  const onSelectedCategory = (slug: "series" | "movies" | "my-list") =>
-    setCategory(slug);
+  const onSelectedCategory = (slug: 'series' | 'movies' | 'my-list') => setCategory(slug);
 
-  const onNavigateToDetails = (
-    name: "SerieDetails" | "MovieDetails",
-    id: number
-  ) => navigate(name, { id });
+  const onNavigateToDetails = (name: 'SerieDetails' | 'MovieDetails', id: number) =>
+    navigate(name, { id });
 
   return (
     <Container>
       <CategoryItemWrapper>
         <FlatList
           style={{ marginTop: STATUS_BAR_HEIGHT + 20 }}
-          contentContainerStyle={{ flex: 1, justifyContent: "space-evenly" }}
+          contentContainerStyle={{ flex: 1, justifyContent: 'space-evenly' }}
           data={categories}
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
             <CategoryItem
               title={item.title}
               isActive={category === item.slug}
-              onPress={() =>
-                onSelectedCategory(item.slug as "series" | "movies" | "my-list")
-              }
+              onPress={() => onSelectedCategory(item.slug as 'series' | 'movies' | 'my-list')}
             />
           )}
           horizontal
@@ -69,7 +57,7 @@ export const Home: FC = () => {
         />
       </CategoryItemWrapper>
 
-      {category === "series" && (
+      {category === 'series' && (
         <>
           {airingTodaySeries.isLoading ||
           onTheAirSeries.isLoading ||
@@ -95,9 +83,7 @@ export const Home: FC = () => {
                         renderItem={({ item }) => (
                           <MovieCard
                             data={item}
-                            onPress={() =>
-                              onNavigateToDetails("SerieDetails", item.id)
-                            }
+                            onPress={() => onNavigateToDetails('SerieDetails', item.id)}
                           />
                         )}
                         horizontal
@@ -118,9 +104,7 @@ export const Home: FC = () => {
                         renderItem={({ item }) => (
                           <MovieCard
                             data={item}
-                            onPress={() =>
-                              onNavigateToDetails("SerieDetails", item.id)
-                            }
+                            onPress={() => onNavigateToDetails('SerieDetails', item.id)}
                           />
                         )}
                         horizontal
@@ -141,9 +125,7 @@ export const Home: FC = () => {
                         renderItem={({ item }) => (
                           <MovieCard
                             data={item}
-                            onPress={() =>
-                              onNavigateToDetails("SerieDetails", item.id)
-                            }
+                            onPress={() => onNavigateToDetails('SerieDetails', item.id)}
                           />
                         )}
                         horizontal
@@ -164,9 +146,7 @@ export const Home: FC = () => {
                         renderItem={({ item }) => (
                           <MovieCard
                             data={item}
-                            onPress={() =>
-                              onNavigateToDetails("SerieDetails", item.id)
-                            }
+                            onPress={() => onNavigateToDetails('SerieDetails', item.id)}
                           />
                         )}
                         horizontal
@@ -182,11 +162,9 @@ export const Home: FC = () => {
         </>
       )}
 
-      {category === "movies" && (
+      {category === 'movies' && (
         <>
-          {upcomingMovies.isLoading ||
-          popularMovies.isLoading ||
-          topRatedMovies.isLoading ? (
+          {upcomingMovies.isLoading || popularMovies.isLoading || topRatedMovies.isLoading ? (
             <Loading />
           ) : (
             <FlatList
@@ -205,9 +183,7 @@ export const Home: FC = () => {
                         renderItem={({ item }) => (
                           <UpcomingCard
                             data={item}
-                            onPress={() =>
-                              onNavigateToDetails("MovieDetails", item.id)
-                            }
+                            onPress={() => onNavigateToDetails('MovieDetails', item.id)}
                           />
                         )}
                         showsHorizontalScrollIndicator={false}
@@ -229,9 +205,7 @@ export const Home: FC = () => {
                         renderItem={({ item }) => (
                           <MovieCard
                             data={item}
-                            onPress={() =>
-                              onNavigateToDetails("MovieDetails", item.id)
-                            }
+                            onPress={() => onNavigateToDetails('MovieDetails', item.id)}
                           />
                         )}
                         horizontal
@@ -252,9 +226,7 @@ export const Home: FC = () => {
                         renderItem={({ item }) => (
                           <MovieCard
                             data={item}
-                            onPress={() =>
-                              onNavigateToDetails("MovieDetails", item.id)
-                            }
+                            onPress={() => onNavigateToDetails('MovieDetails', item.id)}
                           />
                         )}
                         horizontal

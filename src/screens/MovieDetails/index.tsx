@@ -1,31 +1,23 @@
-import { useRef, FC } from "react";
-import { FlatList } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { useTheme } from "styled-components/native";
-import { ArrowLeft, Star, ListPlus, FileX } from "phosphor-react-native";
+import { useRef, FC } from 'react';
+import { FlatList } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useTheme } from 'styled-components/native';
+import { ArrowLeft, Star, ListPlus, FileX } from 'phosphor-react-native';
 
-import { apiImageUrl } from "@services/api";
+import { apiImageUrl } from '@services/api';
 
-import { useDetailsRequest } from "@hooks/Movie/useDetailsRequest";
+import { useDetailsRequest } from '@hooks/Movie/useDetailsRequest';
 
-import {
-  GenreCard,
-  GenreCardWrapper,
-  GenreCardTitle,
-} from "@components/GenreCard";
+import { GenreCard, GenreCardWrapper, GenreCardTitle } from '@components/GenreCard';
 import {
   ActorCard,
   ActorCardWrapper,
   ActorCardTitle,
-} from "@components-of-screens/MovieDetails/components/ActorCard";
-import {
-  MovieCard,
-  MovieCardWrapper,
-  MovieCardTitle,
-} from "@components/MovieCard";
-import { Loading } from "@components/Loading";
+} from '@components-of-screens/MovieDetails/components/ActorCard';
+import { MovieCard, MovieCardWrapper, MovieCardTitle } from '@components/MovieCard';
+import { Loading } from '@components/Loading';
 
-import { formatCurrentMovie } from "@utils/formatCurrentMovie";
+import { formatCurrentMovie } from '@utils/formatCurrentMovie';
 
 import {
   Container,
@@ -43,7 +35,7 @@ import {
   Content,
   Title,
   Overview,
-} from "./styles";
+} from './styles';
 
 interface Params {
   id: number;
@@ -53,8 +45,7 @@ export const MovieDetails: FC = () => {
   const { navigate, goBack } = useNavigation();
   const route = useRoute();
   const { id } = route.params as Params;
-  const { movieDetails, movieCredits, recommendedMovies } =
-    useDetailsRequest(id);
+  const { movieDetails, movieCredits, recommendedMovies } = useDetailsRequest(id);
   const { colors } = useTheme();
 
   const flatListRef = useRef<FlatList>(null);
@@ -66,7 +57,7 @@ export const MovieDetails: FC = () => {
 
   const onNavigateToMovieDetails = (id: number): void => {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
-    navigate("MovieDetails", { id });
+    navigate('MovieDetails', { id });
   };
 
   return (
@@ -165,10 +156,7 @@ export const MovieDetails: FC = () => {
                       data={recommendedMovies.data?.results}
                       keyExtractor={(item) => String(item.id)}
                       renderItem={({ item }) => (
-                        <MovieCard
-                          data={item}
-                          onPress={() => onNavigateToMovieDetails(item.id)}
-                        />
+                        <MovieCard data={item} onPress={() => onNavigateToMovieDetails(item.id)} />
                       )}
                       horizontal
                       showsHorizontalScrollIndicator={false}

@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import { Container, Load } from "./styles";
+import { Container, Load } from './styles';
 
 export const Loading: FC = () => {
   return (

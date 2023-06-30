@@ -1,5 +1,5 @@
-import Constants from "expo-constants";
-import axios from "axios";
+import Constants from 'expo-constants';
+import axios from 'axios';
 
 const apiUrl = Constants.expoConfig.extra?.apiUrl;
 const apiImageUrl = Constants.expoConfig.extra?.apiImageUrl;

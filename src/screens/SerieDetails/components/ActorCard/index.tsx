@@ -1,10 +1,10 @@
-import { FC } from "react";
-import { useTheme } from "styled-components/native";
-import { FileX } from "phosphor-react-native";
+import { FC } from 'react';
+import { useTheme } from 'styled-components/native';
+import { FileX } from 'phosphor-react-native';
 
-import { apiImageUrl } from "@services/api";
+import { apiImageUrl } from '@services/api';
 
-import { CreditsDTO } from "@dtos/Movie/CreditsDTO";
+import { CreditsDTO } from '@dtos/Movie/CreditsDTO';
 
 import {
   Container,
@@ -15,7 +15,7 @@ import {
   Character,
   ActorCardWrapper,
   ActorCardTitle,
-} from "./styles";
+} from './styles';
 
 interface Props {
   data: CreditsDTO.Cast;
@@ -29,10 +29,7 @@ export const ActorCard: FC<Props> = (props) => {
   return (
     <Container>
       {profile_path ? (
-        <Poster
-          source={{ uri: `${apiImageUrl}${profile_path}` }}
-          resizeMode="cover"
-        />
+        <Poster source={{ uri: `${apiImageUrl}${profile_path}` }} resizeMode="cover" />
       ) : (
         <EmptyPoster>
           <FileX size={28} color={colors.text60} />

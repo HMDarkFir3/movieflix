@@ -1,38 +1,31 @@
-import { useState, useEffect, useRef, FC } from "react";
-import { FlatList } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { useTheme } from "styled-components/native";
-import { ArrowLeft, Star, ListPlus, FileX } from "phosphor-react-native";
+import { useState, useEffect, useRef, FC } from 'react';
+import { FlatList } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useTheme } from 'styled-components/native';
+import { ArrowLeft, Star, ListPlus, FileX } from 'phosphor-react-native';
 
-import { DetailsDTO } from "@dtos/Serie/DetalsDTO";
+import { DetailsDTO } from '@dtos/Serie/DetalsDTO';
 
-import { apiImageUrl } from "@services/api";
+import { apiImageUrl } from '@services/api';
+import { getSeasonDetails } from '@services/series';
 
-import { useDetailsRequest } from "@hooks/Serie/useDetailsRequest";
+import { useDetailsRequest } from '@hooks/Serie/useDetailsRequest';
 
-import {
-  GenreCard,
-  GenreCardWrapper,
-  GenreCardTitle,
-} from "@components/GenreCard";
+import { GenreCard, GenreCardWrapper, GenreCardTitle } from '@components/GenreCard';
 import {
   SeasonCard,
   SeasonCardWrapper,
   SeasonCardTitle,
-} from "@components-of-screens/SerieDetails/components/SeasonCard";
+} from '@components-of-screens/SerieDetails/components/SeasonCard';
 import {
   ActorCard,
   ActorCardWrapper,
   ActorCardTitle,
-} from "@components-of-screens/MovieDetails/components/ActorCard";
-import {
-  MovieCard,
-  MovieCardWrapper,
-  MovieCardTitle,
-} from "@components/MovieCard";
-import { Loading } from "@components/Loading";
+} from '@components-of-screens/MovieDetails/components/ActorCard';
+import { MovieCard, MovieCardWrapper, MovieCardTitle } from '@components/MovieCard';
+import { Loading } from '@components/Loading';
 
-import { formatCurrentMovie } from "@utils/formatCurrentMovie";
+import { formatCurrentMovie } from '@utils/formatCurrentMovie';
 
 import {
   Container,
@@ -50,7 +43,7 @@ import {
   Content,
   Title,
   Overview,
-} from "./styles";
+} from './styles';
 
 interface Params {
   id: number;
@@ -64,7 +57,8 @@ export const SerieDetails: FC = () => {
   const { colors } = useTheme();
 
   const [isActiveSeason, setIsActiveSeason] = useState<number>(1);
-  const [poster, setPoster] = useState<string>("");
+  const [poster, setPoster] = useState<string>('');
+  const [overview, setOverview] = useState<string | null>(null);
 
   const flatListRef = useRef<FlatList>(null);
 
@@ -75,16 +69,35 @@ export const SerieDetails: FC = () => {
   const onToggleSeason = (item: DetailsDTO.Season): void => {
     setIsActiveSeason(item.season_number);
     setPoster(item.poster_path);
+
+    if (item.overview !== '') {
+      setOverview(item.overview);
+    } else {
+      setOverview(null);
+    }
   };
 
   const onNavigateToSerieDetails = (id: number): void => {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
-    navigate("SerieDetails", { id });
+    navigate('SerieDetails', { id });
   };
 
   useEffect(() => {
     setIsActiveSeason(serieDetails.data?.seasons[0].season_number);
     setPoster(serieDetails.data?.seasons[0].poster_path);
+
+    if (serieDetails.data?.seasons[0].overview !== '') {
+      setOverview(serieDetails.data?.seasons[0].overview);
+    }
+
+    // if (serieDetails.isSuccess) {
+    //   const data = getSeasonDetails(
+    //     id,
+    //     serieDetails.data?.seasons[0].season_number
+    //   );
+
+    //   console.log(data);
+    // }
   }, [serieDetails.isSuccess]);
 
   return (
@@ -154,7 +167,7 @@ export const SerieDetails: FC = () => {
 
                 <Content>
                   <Title>{serieDetails.data?.name}</Title>
-                  <Overview>{serieDetails.data?.overview}</Overview>
+                  <Overview>{overview ?? 'Empty overview'}</Overview>
                 </Content>
 
                 <SeasonCardWrapper>
@@ -203,10 +216,7 @@ export const SerieDetails: FC = () => {
                       data={recommendedSeries.data?.results}
                       keyExtractor={(item) => String(item.id)}
                       renderItem={({ item }) => (
-                        <MovieCard
-                          data={item}
-                          onPress={() => onNavigateToSerieDetails(item.id)}
-                        />
+                        <MovieCard data={item} onPress={() => onNavigateToSerieDetails(item.id)} />
                       )}
                       horizontal
                       showsHorizontalScrollIndicator={false}

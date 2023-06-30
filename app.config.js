@@ -1,22 +1,38 @@
 export default ({ config }) => {
-  const { APP_ENV } = process.env;
+  const { APP_ENV, API_URL, API_IMAGE_URL, API_KEY } = process.env;
 
   switch (APP_ENV) {
-    case "development": {
+    case 'development': {
       return {
         ...config,
-        name: "Movieflix (DEVELOPMENT)",
+        name: 'Movieflix (DEVELOPMENT)',
         android: {
-          package: "com.hmdarkfire.movieflix.development",
+          package: 'com.hmdarkfire.movieflix.development',
+        },
+        extra: {
+          eas: {
+            projectId: 'f41a3d04-83f8-49ae-8627-299d5af7636c',
+          },
+          apiUrl: API_URL,
+          apiImageUrl: API_IMAGE_URL,
+          apiKey: API_KEY,
         },
       };
     }
-    case "preview": {
+    case 'preview': {
       return {
         ...config,
-        name: "Movieflix (PREVIEW)",
+        name: 'Movieflix (PREVIEW)',
         android: {
-          package: "com.hmdarkfire.movieflix.preview",
+          package: 'com.hmdarkfire.movieflix.preview',
+        },
+        extra: {
+          eas: {
+            projectId: 'f41a3d04-83f8-49ae-8627-299d5af7636c',
+          },
+          apiUrl: API_URL,
+          apiImageUrl: API_IMAGE_URL,
+          apiKey: API_KEY,
         },
       };
     }
@@ -25,11 +41,11 @@ export default ({ config }) => {
         ...config,
         extra: {
           eas: {
-            projectId: "34a8fb7a-cd46-4b36-aeca-375e5fb0f1f5",
+            projectId: 'f41a3d04-83f8-49ae-8627-299d5af7636c',
           },
-          apiUrl: "https://api.themoviedb.org/3",
-          apiImageUrl: "https://image.tmdb.org/t/p/original",
-          apiKey: "0c0022784169f05724bd271bfbac8521",
+          apiUrl: API_URL,
+          apiImageUrl: API_IMAGE_URL,
+          apiKey: API_KEY,
         },
       };
     }
