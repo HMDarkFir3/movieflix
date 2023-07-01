@@ -22,33 +22,6 @@ export const EmptyPoster = styled.View`
   border-radius: 12px;
 `;
 
-export const RatingCard = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-
-  position: absolute;
-  top: 8px;
-  left: 8px;
-
-  height: 24px;
-
-  padding: 0 8px;
-
-  background-color: ${({ theme }) => theme.colors.secondary};
-  border-radius: 8px;
-`;
-
-export const Rating = styled.Text`
-  margin-left: 4px;
-
-  font-size: 12px;
-  ${({ theme }) => css`
-    font-family: ${theme.fonts.bold};
-    color: ${theme.colors.text10};
-  `}
-`;
-
 export const MovieCardWrapper = styled.View`
   padding: 0 20px;
   margin-top: 28px;

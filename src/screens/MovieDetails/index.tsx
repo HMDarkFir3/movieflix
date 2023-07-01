@@ -50,7 +50,8 @@ export const MovieDetails: FC = () => {
 
   const flatListRef = useRef<FlatList>(null);
 
-  const rating = movieDetails.data.vote_average / 2;
+  const rating = movieDetails.data?.vote_average / 2;
+
   const currentMovie = formatCurrentMovie(movieDetails.data?.runtime);
 
   const onBackButtonPress = (): void => goBack();

@@ -41,7 +41,7 @@ export const Home: FC = () => {
     <Container>
       <CategoryItemWrapper>
         <FlatList
-          style={{ marginTop: STATUS_BAR_HEIGHT + 20 }}
+          style={{ marginTop: STATUS_BAR_HEIGHT + 20, marginBottom: 20 }}
           contentContainerStyle={{ flex: 1, justifyContent: 'space-evenly' }}
           data={categories}
           keyExtractor={(item) => String(item.id)}

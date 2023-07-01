@@ -5,9 +5,10 @@ import { useTheme } from 'styled-components/native';
 import { ArrowLeft, Star, ListPlus, FileX } from 'phosphor-react-native';
 
 import { DetailsDTO } from '@dtos/Serie/DetalsDTO';
+import { SeasonDetailsDTO } from '@dtos/Serie/SeasonDetailsDTO';
 
 import { apiImageUrl } from '@services/api';
-// import { getSeasonDetails } from '@services/series';
+import { getSeasonDetails } from '@services/series';
 
 import { useDetailsRequest } from '@hooks/Serie/useDetailsRequest';
 
@@ -17,6 +18,11 @@ import {
   SeasonCardWrapper,
   SeasonCardTitle,
 } from '@components-of-screens/SerieDetails/components/SeasonCard';
+import {
+  EpisodeCard,
+  EpisodeCardWrapper,
+  EpisodeCardTitle,
+} from '@components-of-screens/SerieDetails/components/EpisodeCard';
 // import {
 //   ActorCard,
 //   ActorCardWrapper,
@@ -56,14 +62,15 @@ export const SerieDetails: FC = () => {
   const [isActiveSeason, setIsActiveSeason] = useState<number>(1);
   const [poster, setPoster] = useState<string>('');
   const [overview, setOverview] = useState<string | null>(null);
+  const [seasonDetails, setSeasonDetails] = useState<SeasonDetailsDTO.Response | null>(null);
 
   const flatListRef = useRef<FlatList>(null);
 
-  const rating = serieDetails.data.vote_average / 2;
+  const rating = serieDetails.data?.vote_average / 2;
 
   const onBackButtonPress = (): void => goBack();
 
-  const onToggleSeason = (item: DetailsDTO.Season): void => {
+  const onToggleSeason = async (item: DetailsDTO.Season): Promise<void> => {
     setIsActiveSeason(item.season_number);
     setPoster(item.poster_path);
 
@@ -72,30 +79,39 @@ export const SerieDetails: FC = () => {
     } else {
       setOverview(null);
     }
+
+    const response = await getSeasonDetails(id, item.season_number);
+    setSeasonDetails(response);
   };
+
+  console.log(id);
 
   const onNavigateToSerieDetails = (serieId: number): void => {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
+    setIsActiveSeason(1);
+    setPoster('');
+    setOverview(null);
+    setSeasonDetails(null);
     navigate('SerieDetails', { id: serieId });
   };
 
   useEffect(() => {
-    setIsActiveSeason(serieDetails.data?.seasons[0].season_number);
-    setPoster(serieDetails.data?.seasons[0].poster_path);
+    const onFisrtDetails = async () => {
+      setIsActiveSeason(serieDetails.data?.seasons[0].season_number);
+      setPoster(serieDetails.data?.seasons[0].poster_path);
 
-    if (serieDetails.data?.seasons[0].overview !== '') {
-      setOverview(serieDetails.data?.seasons[0].overview);
-    }
+      if (serieDetails.data?.seasons[0].overview !== '') {
+        setOverview(serieDetails.data?.seasons[0].overview);
+      }
 
-    // if (serieDetails.isSuccess) {
-    //   const data = getSeasonDetails(
-    //     id,
-    //     serieDetails.data?.seasons[0].season_number
-    //   );
+      if (serieDetails.data?.seasons) {
+        const response = await getSeasonDetails(id, serieDetails.data?.seasons[0].season_number);
+        setSeasonDetails(response);
+      }
+    };
 
-    //   console.log(data);
-    // }
-  }, [serieDetails.data?.seasons, serieDetails.isSuccess]);
+    onFisrtDetails();
+  }, [id, serieDetails.data?.seasons]);
 
   return (
     <Container>
@@ -186,6 +202,21 @@ export const SerieDetails: FC = () => {
                     showsHorizontalScrollIndicator={false}
                   />
                 </SeasonCardWrapper>
+
+                {seasonDetails?.episodes.length > 0 && (
+                  <EpisodeCardWrapper>
+                    <EpisodeCardTitle>Episodes</EpisodeCardTitle>
+
+                    <FlatList
+                      style={{ marginTop: 12 }}
+                      contentContainerStyle={{ gap: 16 }}
+                      data={seasonDetails?.episodes}
+                      keyExtractor={(item) => String(item.id)}
+                      renderItem={({ item }) => <EpisodeCard data={item} />}
+                      horizontal
+                    />
+                  </EpisodeCardWrapper>
+                )}
 
                 {/* {movieCredits.data?.cast.length > 0 && (
                   <ActorCardWrapper>

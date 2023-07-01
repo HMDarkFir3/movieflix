@@ -2,7 +2,7 @@ import { api } from '@services/api';
 
 import { SeriesDTO } from '@dtos/Serie/SeriesDTO';
 import { DetailsDTO } from '@dtos/Serie/DetalsDTO';
-import { SeasonDetailsDTO } from '@dtos/Serie/SeasonDetails';
+import { SeasonDetailsDTO } from '@dtos/Serie/SeasonDetailsDTo';
 
 const getAiringTodaySeries = async () => {
   const response = await api.get<SeriesDTO.Response>('/tv/airing_today');
