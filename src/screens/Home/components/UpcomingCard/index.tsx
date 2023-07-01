@@ -23,17 +23,17 @@ interface Props extends PressableProps {
 }
 
 export const UpcomingCard: FC<Props> = (props) => {
-  const { backdrop_path, title, vote_average } = props.data;
+  const { backdrop_path: backdropPath, title, vote_average: voteAverage } = props.data;
   const { ...rest } = props;
 
   const { colors } = useTheme();
 
-  const rating = vote_average / 2;
+  const rating = voteAverage / 2;
 
   return (
     <Container {...rest}>
       <Wrapper>
-        <Poster source={{ uri: `${apiImageUrl}${backdrop_path}` }} resizeMode="contain" />
+        <Poster source={{ uri: `${apiImageUrl}${backdropPath}` }} resizeMode="contain" />
 
         <RatingCard>
           <Star size={16} color={colors.star} weight="fill" />

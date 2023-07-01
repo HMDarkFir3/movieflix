@@ -1,7 +1,5 @@
 export default ({ config }) => {
-  const { APP_ENV, API_URL, API_IMAGE_URL, API_KEY } = process.env;
-
-  switch (APP_ENV) {
+  switch (process.env.APP_ENV) {
     case 'development': {
       return {
         ...config,
@@ -10,12 +8,12 @@ export default ({ config }) => {
           package: 'com.hmdarkfire.movieflix.development',
         },
         extra: {
+          apiUrl: process.env.API_URL,
+          apiImageUrl: process.env.API_IMAGE_URL,
+          apiKey: process.env.API_KEY,
           eas: {
             projectId: 'f41a3d04-83f8-49ae-8627-299d5af7636c',
           },
-          apiUrl: API_URL,
-          apiImageUrl: API_IMAGE_URL,
-          apiKey: API_KEY,
         },
       };
     }
@@ -27,12 +25,12 @@ export default ({ config }) => {
           package: 'com.hmdarkfire.movieflix.preview',
         },
         extra: {
+          apiUrl: process.env.API_URL,
+          apiImageUrl: process.env.API_IMAGE_URL,
+          apiKey: process.env.API_KEY,
           eas: {
             projectId: 'f41a3d04-83f8-49ae-8627-299d5af7636c',
           },
-          apiUrl: API_URL,
-          apiImageUrl: API_IMAGE_URL,
-          apiKey: API_KEY,
         },
       };
     }
@@ -40,12 +38,12 @@ export default ({ config }) => {
       return {
         ...config,
         extra: {
+          apiUrl: process.env.API_URL,
+          apiImageUrl: process.env.API_IMAGE_URL,
+          apiKey: process.env.API_KEY,
           eas: {
             projectId: 'f41a3d04-83f8-49ae-8627-299d5af7636c',
           },
-          apiUrl: API_URL,
-          apiImageUrl: API_IMAGE_URL,
-          apiKey: API_KEY,
         },
       };
     }

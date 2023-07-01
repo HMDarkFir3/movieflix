@@ -7,7 +7,7 @@ import { ArrowLeft, Star, ListPlus, FileX } from 'phosphor-react-native';
 import { DetailsDTO } from '@dtos/Serie/DetalsDTO';
 
 import { apiImageUrl } from '@services/api';
-import { getSeasonDetails } from '@services/series';
+// import { getSeasonDetails } from '@services/series';
 
 import { useDetailsRequest } from '@hooks/Serie/useDetailsRequest';
 
@@ -17,15 +17,13 @@ import {
   SeasonCardWrapper,
   SeasonCardTitle,
 } from '@components-of-screens/SerieDetails/components/SeasonCard';
-import {
-  ActorCard,
-  ActorCardWrapper,
-  ActorCardTitle,
-} from '@components-of-screens/MovieDetails/components/ActorCard';
+// import {
+//   ActorCard,
+//   ActorCardWrapper,
+//   ActorCardTitle,
+// } from '@components-of-screens/MovieDetails/components/ActorCard';
 import { MovieCard, MovieCardWrapper, MovieCardTitle } from '@components/MovieCard';
 import { Loading } from '@components/Loading';
-
-import { formatCurrentMovie } from '@utils/formatCurrentMovie';
 
 import {
   Container,
@@ -34,7 +32,6 @@ import {
   Poster,
   EmptyPoster,
   Gradient,
-  Current,
   Header,
   Box,
   RatingCard,
@@ -62,7 +59,7 @@ export const SerieDetails: FC = () => {
 
   const flatListRef = useRef<FlatList>(null);
 
-  const rating = serieDetails.data?.vote_average / 2;
+  const rating = serieDetails.data.vote_average / 2;
 
   const onBackButtonPress = (): void => goBack();
 
@@ -77,9 +74,9 @@ export const SerieDetails: FC = () => {
     }
   };
 
-  const onNavigateToSerieDetails = (id: number): void => {
+  const onNavigateToSerieDetails = (serieId: number): void => {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
-    navigate('SerieDetails', { id });
+    navigate('SerieDetails', { id: serieId });
   };
 
   useEffect(() => {
@@ -98,7 +95,7 @@ export const SerieDetails: FC = () => {
 
     //   console.log(data);
     // }
-  }, [serieDetails.isSuccess]);
+  }, [serieDetails.data?.seasons, serieDetails.isSuccess]);
 
   return (
     <Container>

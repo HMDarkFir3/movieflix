@@ -11,10 +11,10 @@ interface Props extends RectButtonProps {
 }
 
 export const SeasonCard: FC<Props> = (props) => {
-  const { name, season_number } = props.data;
+  const { name, season_number: seasonNumber } = props.data;
   const { isActive, ...rest } = props;
 
-  const formmattedName = season_number >= 1 ? season_number : name;
+  const formmattedName = seasonNumber >= 1 ? seasonNumber : name;
 
   return (
     <Container {...rest}>

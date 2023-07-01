@@ -5,3 +5,5 @@ export const Container = styled.View`
 
   background-color: ${({ theme }) => theme.colors.background};
 `;
+
+export const Wrapper = styled.View``;

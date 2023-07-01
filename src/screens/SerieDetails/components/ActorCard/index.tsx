@@ -22,14 +22,14 @@ interface Props {
 }
 
 export const ActorCard: FC<Props> = (props) => {
-  const { profile_path, name, character } = props.data;
+  const { profile_path: profilePath, name, character } = props.data;
 
   const { colors } = useTheme();
 
   return (
     <Container>
-      {profile_path ? (
-        <Poster source={{ uri: `${apiImageUrl}${profile_path}` }} resizeMode="cover" />
+      {profilePath ? (
+        <Poster source={{ uri: `${apiImageUrl}${profilePath}` }} resizeMode="cover" />
       ) : (
         <EmptyPoster>
           <FileX size={28} color={colors.text60} />

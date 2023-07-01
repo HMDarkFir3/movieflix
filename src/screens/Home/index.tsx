@@ -20,7 +20,7 @@ import { Loading } from '@components/Loading';
 import { categories } from '@utils/categories';
 import { STATUS_BAR_HEIGHT } from '@utils/constants';
 
-import { Container } from './styles';
+import { Container, Wrapper } from './styles';
 
 export const Home: FC = () => {
   const [category, setCategory] = useState<'series' | 'movies' | 'my-list'>('movies');
@@ -58,7 +58,7 @@ export const Home: FC = () => {
       </CategoryItemWrapper>
 
       {category === 'series' && (
-        <>
+        <Wrapper>
           {airingTodaySeries.isLoading ||
           onTheAirSeries.isLoading ||
           popularSeries.isLoading ||
@@ -159,11 +159,11 @@ export const Home: FC = () => {
               showsVerticalScrollIndicator={false}
             />
           )}
-        </>
+        </Wrapper>
       )}
 
       {category === 'movies' && (
-        <>
+        <Wrapper>
           {upcomingMovies.isLoading || popularMovies.isLoading || topRatedMovies.isLoading ? (
             <Loading />
           ) : (
@@ -239,7 +239,7 @@ export const Home: FC = () => {
               showsVerticalScrollIndicator={false}
             />
           )}
-        </>
+        </Wrapper>
       )}
     </Container>
   );

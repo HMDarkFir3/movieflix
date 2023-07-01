@@ -50,14 +50,14 @@ export const MovieDetails: FC = () => {
 
   const flatListRef = useRef<FlatList>(null);
 
-  const rating = movieDetails.data?.vote_average / 2;
+  const rating = movieDetails.data.vote_average / 2;
   const currentMovie = formatCurrentMovie(movieDetails.data?.runtime);
 
   const onBackButtonPress = (): void => goBack();
 
-  const onNavigateToMovieDetails = (id: number): void => {
+  const onNavigateToMovieDetails = (movieId: number): void => {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
-    navigate('MovieDetails', { id });
+    navigate('MovieDetails', { id: movieId });
   };
 
   return (
