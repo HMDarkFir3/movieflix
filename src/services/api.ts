@@ -1,14 +1,14 @@
-import Contants from 'expo-constants';
 import axios from 'axios';
 
-console.log(Contants.expoConfig.extra);
+const { EXPO_PUBLIC_TMDB_API_URL, EXPO_PUBLIC_TMDB_API_URL_IMAGE, EXPO_PUBLIC_TMDB_API_KEY } =
+  process.env;
 
-const apiImageUrl = 'https://image.tmdb.org/t/p/original';
+const apiImageUrl = EXPO_PUBLIC_TMDB_API_URL_IMAGE;
 
 const api = axios.create({
-  baseURL: 'https://api.themoviedb.org/3',
+  baseURL: EXPO_PUBLIC_TMDB_API_URL,
   params: {
-    api_key: '0c0022784169f05724bd271bfbac8521',
+    api_key: EXPO_PUBLIC_TMDB_API_KEY,
   },
 });
 

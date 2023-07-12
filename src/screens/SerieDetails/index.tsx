@@ -84,8 +84,6 @@ export const SerieDetails: FC = () => {
     setSeasonDetails(response);
   };
 
-  console.log(id);
-
   const onNavigateToSerieDetails = (serieId: number): void => {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
     setIsActiveSeason(1);
