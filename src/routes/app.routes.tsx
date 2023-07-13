@@ -7,12 +7,10 @@ import { MovieDetails } from '@screens/MovieDetails';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
-export const AppRoutes: FC = () => {
-  return (
-    <Navigator screenOptions={{ headerShown: false }}>
-      <Screen name="Home" component={Home} />
-      <Screen name="SerieDetails" component={SerieDetails} />
-      <Screen name="MovieDetails" component={MovieDetails} />
-    </Navigator>
-  );
-};
+export const AppRoutes: FC = () => (
+  <Navigator screenOptions={{ headerShown: false }}>
+    <Screen name="Home" component={Home} />
+    <Screen name="SerieDetails" component={SerieDetails} />
+    <Screen name="MovieDetails" component={MovieDetails} />
+  </Navigator>
+);

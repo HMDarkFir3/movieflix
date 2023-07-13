@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import { FC } from 'react';
 import { PressableProps } from 'react-native';
 import { useTheme } from 'styled-components/native';
@@ -14,28 +15,31 @@ import { Container, Poster, EmptyPoster, MovieCardWrapper, MovieCardTitle } from
 
 interface Props extends PressableProps {
   data: MoviesDTO.Result | SeriesDTO.Result;
+  pathname: 'seriedetails' | 'moviedetails';
 }
 
 export const MovieCard: FC<Props> = (props) => {
-  const { poster_path: posterPath, vote_average: voteAverage } = props.data;
-  const { ...rest } = props;
+  const { id, poster_path: posterPath, vote_average: voteAverage } = props.data;
+  const { pathname, ...rest } = props;
 
   const { colors } = useTheme();
 
   const rating = voteAverage / 2;
 
   return (
-    <Container {...rest}>
-      {posterPath ? (
-        <Poster source={{ uri: `${apiImageUrl}${posterPath}` }} />
-      ) : (
-        <EmptyPoster>
-          <FileX size={40} color={colors.text60} />
-        </EmptyPoster>
-      )}
+    <Link href={{ pathname: `/${pathname}/${id}` }}>
+      <Container {...rest}>
+        {posterPath ? (
+          <Poster source={{ uri: `${apiImageUrl}${posterPath}` }} />
+        ) : (
+          <EmptyPoster>
+            <FileX size={40} color={colors.text60} />
+          </EmptyPoster>
+        )}
 
-      <RatingCard rating={rating} />
-    </Container>
+        <RatingCard rating={rating} />
+      </Container>
+    </Link>
   );
 };
 

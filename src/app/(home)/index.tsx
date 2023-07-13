@@ -1,19 +1,12 @@
+import { router } from 'expo-router';
 import { useState, FC } from 'react';
 import { FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 import { useSeriesRequest } from '@hooks/Serie/useSeriesRequest';
 import { useMoviesRequest } from '@hooks/Movie/useMoviesRequest';
 
-import {
-  CategoryItem,
-  CategoryItemWrapper,
-} from '@components-of-screens/Home/components/CategoryItem';
-import {
-  UpcomingCard,
-  UpcomingCardWrapper,
-  UpcomingCardTitle,
-} from '@components-of-screens/Home/components/UpcomingCard';
+import { CategoryItem, CategoryItemWrapper } from '@components/CategoryItem';
+import { UpcomingCard, UpcomingCardWrapper, UpcomingCardTitle } from '@components/UpcomingCard';
 import { MovieCard, MovieCardWrapper, MovieCardTitle } from '@components/MovieCard';
 import { Loading } from '@components/Loading';
 
@@ -22,7 +15,7 @@ import { STATUS_BAR_HEIGHT } from '@utils/constants';
 
 import { Container, Wrapper } from './styles';
 
-export const Home: FC = () => {
+const Home: FC = () => {
   const [category, setCategory] = useState<'series' | 'movies' | 'my-list'>('movies');
 
   const { airingTodaySeries, onTheAirSeries, popularSeries, topRatedSeries } = useSeriesRequest(
@@ -30,12 +23,10 @@ export const Home: FC = () => {
   );
   const { upcomingMovies, popularMovies, topRatedMovies } = useMoviesRequest(category === 'movies');
 
-  const { navigate } = useNavigation();
-
   const onSelectedCategory = (slug: 'series' | 'movies' | 'my-list') => setCategory(slug);
 
-  const onNavigateToDetails = (name: 'SerieDetails' | 'MovieDetails', id: number) =>
-    navigate(name, { id });
+  const onNavigateToDetails = (url: 'seriedetails' | 'moviedetails', id: number) =>
+    router.push(`${url}/${String(id)}`);
 
   return (
     <Container>
@@ -83,7 +74,8 @@ export const Home: FC = () => {
                         renderItem={({ item }) => (
                           <MovieCard
                             data={item}
-                            onPress={() => onNavigateToDetails('SerieDetails', item.id)}
+                            pathname="seriedetails"
+                            onPress={() => onNavigateToDetails('seriedetails', item.id)}
                           />
                         )}
                         horizontal
@@ -104,7 +96,8 @@ export const Home: FC = () => {
                         renderItem={({ item }) => (
                           <MovieCard
                             data={item}
-                            onPress={() => onNavigateToDetails('SerieDetails', item.id)}
+                            pathname="seriedetails"
+                            onPress={() => onNavigateToDetails('seriedetails', item.id)}
                           />
                         )}
                         horizontal
@@ -125,7 +118,8 @@ export const Home: FC = () => {
                         renderItem={({ item }) => (
                           <MovieCard
                             data={item}
-                            onPress={() => onNavigateToDetails('SerieDetails', item.id)}
+                            pathname="seriedetails"
+                            onPress={() => onNavigateToDetails('seriedetails', item.id)}
                           />
                         )}
                         horizontal
@@ -146,7 +140,8 @@ export const Home: FC = () => {
                         renderItem={({ item }) => (
                           <MovieCard
                             data={item}
-                            onPress={() => onNavigateToDetails('SerieDetails', item.id)}
+                            pathname="seriedetails"
+                            onPress={() => onNavigateToDetails('seriedetails', item.id)}
                           />
                         )}
                         horizontal
@@ -183,7 +178,8 @@ export const Home: FC = () => {
                         renderItem={({ item }) => (
                           <UpcomingCard
                             data={item}
-                            onPress={() => onNavigateToDetails('MovieDetails', item.id)}
+                            pathname="moviedetails"
+                            onPress={() => onNavigateToDetails('moviedetails', item.id)}
                           />
                         )}
                         showsHorizontalScrollIndicator={false}
@@ -205,7 +201,8 @@ export const Home: FC = () => {
                         renderItem={({ item }) => (
                           <MovieCard
                             data={item}
-                            onPress={() => onNavigateToDetails('MovieDetails', item.id)}
+                            pathname="moviedetails"
+                            onPress={() => onNavigateToDetails('moviedetails', item.id)}
                           />
                         )}
                         horizontal
@@ -226,7 +223,8 @@ export const Home: FC = () => {
                         renderItem={({ item }) => (
                           <MovieCard
                             data={item}
-                            onPress={() => onNavigateToDetails('MovieDetails', item.id)}
+                            pathname="moviedetails"
+                            onPress={() => onNavigateToDetails('moviedetails', item.id)}
                           />
                         )}
                         horizontal
@@ -244,3 +242,5 @@ export const Home: FC = () => {
     </Container>
   );
 };
+
+export default Home;

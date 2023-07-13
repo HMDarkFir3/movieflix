@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import { FC } from 'react';
 import { PressableProps } from 'react-native';
 
@@ -18,23 +19,26 @@ import {
 
 interface Props extends PressableProps {
   data: MoviesDTO.Result;
+  pathname: 'seriedetails' | 'moviedetails';
 }
 
 export const UpcomingCard: FC<Props> = (props) => {
-  const { backdrop_path: backdropPath, title, vote_average: voteAverage } = props.data;
-  const { ...rest } = props;
+  const { id, backdrop_path: backdropPath, title, vote_average: voteAverage } = props.data;
+  const { pathname, ...rest } = props;
 
   const rating = voteAverage / 2;
 
   return (
-    <Container {...rest}>
-      <Wrapper>
-        <Poster source={{ uri: `${apiImageUrl}${backdropPath}` }} resizeMode="contain" />
+    <Link href={{ pathname: `/${pathname}/${id}` }}>
+      <Container {...rest}>
+        <Wrapper>
+          <Poster source={{ uri: `${apiImageUrl}${backdropPath}` }} resizeMode="contain" />
 
-        <RatingCard rating={rating} />
-        <Title>{title}</Title>
-      </Wrapper>
-    </Container>
+          <RatingCard rating={rating} />
+          <Title>{title}</Title>
+        </Wrapper>
+      </Container>
+    </Link>
   );
 };
 

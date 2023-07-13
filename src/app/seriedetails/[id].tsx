@@ -1,6 +1,6 @@
+import { router, usePathname } from 'expo-router';
 import { useState, useEffect, useRef, FC } from 'react';
 import { FlatList } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';
 import { ArrowLeft, Star, ListPlus, FileX } from 'phosphor-react-native';
 
@@ -13,16 +13,8 @@ import { getSeasonDetails } from '@services/series';
 import { useDetailsRequest } from '@hooks/Serie/useDetailsRequest';
 
 import { GenreCard, GenreCardWrapper, GenreCardTitle } from '@components/GenreCard';
-import {
-  SeasonCard,
-  SeasonCardWrapper,
-  SeasonCardTitle,
-} from '@components-of-screens/SerieDetails/components/SeasonCard';
-import {
-  EpisodeCard,
-  EpisodeCardWrapper,
-  EpisodeCardTitle,
-} from '@components-of-screens/SerieDetails/components/EpisodeCard';
+import { SeasonCard, SeasonCardWrapper, SeasonCardTitle } from '@components/SeasonCard';
+import { EpisodeCard, EpisodeCardWrapper, EpisodeCardTitle } from '@components/EpisodeCard';
 // import {
 //   ActorCard,
 //   ActorCardWrapper,
@@ -48,15 +40,10 @@ import {
   Overview,
 } from './styles';
 
-interface Params {
-  id: number;
-}
-
-export const SerieDetails: FC = () => {
-  const { navigate, goBack } = useNavigation();
-  const route = useRoute();
-  const { id } = route.params as Params;
-  const { serieDetails, recommendedSeries } = useDetailsRequest(id);
+const SerieDetails: FC = () => {
+  const pathname = usePathname();
+  const id = pathname.split('/')[2];
+  const { serieDetails, recommendedSeries } = useDetailsRequest(Number(id));
   const { colors } = useTheme();
 
   const [isActiveSeason, setIsActiveSeason] = useState<number>(1);
@@ -68,7 +55,7 @@ export const SerieDetails: FC = () => {
 
   const rating = serieDetails.data?.vote_average / 2;
 
-  const onBackButtonPress = (): void => goBack();
+  const onBackButtonPress = (): void => router.back();
 
   const onToggleSeason = async (item: DetailsDTO.Season): Promise<void> => {
     setIsActiveSeason(item.season_number);
@@ -80,7 +67,7 @@ export const SerieDetails: FC = () => {
       setOverview(null);
     }
 
-    const response = await getSeasonDetails(id, item.season_number);
+    const response = await getSeasonDetails(Number(id), item.season_number);
     setSeasonDetails(response);
   };
 
@@ -90,7 +77,7 @@ export const SerieDetails: FC = () => {
     setPoster('');
     setOverview(null);
     setSeasonDetails(null);
-    navigate('SerieDetails', { id: serieId });
+    router.push(`seriedetails/${serieId}`);
   };
 
   useEffect(() => {
@@ -103,7 +90,10 @@ export const SerieDetails: FC = () => {
       }
 
       if (serieDetails.data?.seasons) {
-        const response = await getSeasonDetails(id, serieDetails.data?.seasons[0].season_number);
+        const response = await getSeasonDetails(
+          Number(id),
+          serieDetails.data?.seasons[0].season_number
+        );
         setSeasonDetails(response);
       }
     };
@@ -242,7 +232,11 @@ export const SerieDetails: FC = () => {
                       data={recommendedSeries.data?.results}
                       keyExtractor={(item) => String(item.id)}
                       renderItem={({ item }) => (
-                        <MovieCard data={item} onPress={() => onNavigateToSerieDetails(item.id)} />
+                        <MovieCard
+                          data={item}
+                          pathname="seriedetails"
+                          onPress={() => onNavigateToSerieDetails(item.id)}
+                        />
                       )}
                       horizontal
                       showsHorizontalScrollIndicator={false}
@@ -258,3 +252,5 @@ export const SerieDetails: FC = () => {
     </Container>
   );
 };
+
+export default SerieDetails;

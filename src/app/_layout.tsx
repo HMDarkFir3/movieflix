@@ -1,3 +1,4 @@
+import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import { Roboto_400Regular, Roboto_500Medium, Roboto_700Bold } from '@expo-google-fonts/roboto';
@@ -9,11 +10,9 @@ import { ThemeProvider } from 'styled-components/native';
 
 import { queryClient } from '@services/queryClient';
 
-import { Routes } from '@routes/index.routes';
-
 import { dark } from '@themes/dark';
 
-export const App: FC = () => {
+const RootLayout: FC = () => {
   SplashScreen.preventAutoHideAsync();
   const [fontsLoaded] = useFonts({
     Roboto_400Regular,
@@ -29,10 +28,12 @@ export const App: FC = () => {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={dark}>
           <GestureHandlerRootView style={{ flex: 1 }}>
-            <Routes />
+            <Slot />
           </GestureHandlerRootView>
         </ThemeProvider>
       </QueryClientProvider>
     </NavigationContainer>
   );
 };
+
+export default RootLayout;

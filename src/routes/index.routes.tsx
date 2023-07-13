@@ -17,7 +17,7 @@ export const Routes: FC = () => {
         NavigationBar.setBackgroundColorAsync(colors.background);
         NavigationBar.setButtonStyleAsync('light');
       }
-    }, [])
+    }, [colors.background])
   );
 
   return (

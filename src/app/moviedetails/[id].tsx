@@ -1,6 +1,6 @@
+import { router, usePathname } from 'expo-router';
 import { useRef, FC } from 'react';
 import { FlatList } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';
 import { ArrowLeft, Star, ListPlus, FileX } from 'phosphor-react-native';
 
@@ -9,11 +9,7 @@ import { apiImageUrl } from '@services/api';
 import { useDetailsRequest } from '@hooks/Movie/useDetailsRequest';
 
 import { GenreCard, GenreCardWrapper, GenreCardTitle } from '@components/GenreCard';
-import {
-  ActorCard,
-  ActorCardWrapper,
-  ActorCardTitle,
-} from '@components-of-screens/MovieDetails/components/ActorCard';
+import { ActorCard, ActorCardWrapper, ActorCardTitle } from '@components/ActorCard';
 import { MovieCard, MovieCardWrapper, MovieCardTitle } from '@components/MovieCard';
 import { Loading } from '@components/Loading';
 
@@ -37,15 +33,10 @@ import {
   Overview,
 } from './styles';
 
-interface Params {
-  id: number;
-}
-
-export const MovieDetails: FC = () => {
-  const { navigate, goBack } = useNavigation();
-  const route = useRoute();
-  const { id } = route.params as Params;
-  const { movieDetails, movieCredits, recommendedMovies } = useDetailsRequest(id);
+const MovieDetails: FC = () => {
+  const pathname = usePathname();
+  const id = pathname.split('/')[2];
+  const { movieDetails, movieCredits, recommendedMovies } = useDetailsRequest(Number(id));
   const { colors } = useTheme();
 
   const flatListRef = useRef<FlatList>(null);
@@ -54,11 +45,11 @@ export const MovieDetails: FC = () => {
 
   const currentMovie = formatCurrentMovie(movieDetails.data?.runtime);
 
-  const onBackButtonPress = (): void => goBack();
+  const onBackButtonPress = (): void => router.back();
 
   const onNavigateToMovieDetails = (movieId: number): void => {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
-    navigate('MovieDetails', { id: movieId });
+    router.push(`moviedetails/${movieId}`);
   };
 
   return (
@@ -157,7 +148,11 @@ export const MovieDetails: FC = () => {
                       data={recommendedMovies.data?.results}
                       keyExtractor={(item) => String(item.id)}
                       renderItem={({ item }) => (
-                        <MovieCard data={item} onPress={() => onNavigateToMovieDetails(item.id)} />
+                        <MovieCard
+                          data={item}
+                          pathname="moviedetails"
+                          onPress={() => onNavigateToMovieDetails(item.id)}
+                        />
                       )}
                       horizontal
                       showsHorizontalScrollIndicator={false}
@@ -173,3 +168,5 @@ export const MovieDetails: FC = () => {
     </Container>
   );
 };
+
+export default MovieDetails;

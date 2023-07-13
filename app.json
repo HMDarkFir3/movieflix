@@ -2,6 +2,7 @@
   "expo": {
     "name": "Movieflix (LOCAL)",
     "slug": "movieflix",
+    "scheme": "movieflix",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,6 +24,9 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0e0e15"
       }
+    },
+    "web": {
+      "bundler": "metro"
     }
   }
 }
