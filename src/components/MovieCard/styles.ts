@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components/native';
 
-import { SCREEN_WIDTH } from '@utils/constants';
+import { SCREEN_WIDTH } from '@/utils/constants';
 
 export const Container = styled.Pressable``;
 

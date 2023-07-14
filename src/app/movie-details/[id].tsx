@@ -4,16 +4,16 @@ import { FlatList } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { ArrowLeft, Star, ListPlus, FileX } from 'phosphor-react-native';
 
-import { apiImageUrl } from '@services/api';
+import { apiImageUrl } from '@/services/api';
 
-import { useDetailsRequest } from '@hooks/Movie/useDetailsRequest';
+import { useDetailsRequest } from '@/hooks/Movie/useDetailsRequest';
 
-import { GenreCard, GenreCardWrapper, GenreCardTitle } from '@components/GenreCard';
-import { ActorCard, ActorCardWrapper, ActorCardTitle } from '@components/ActorCard';
-import { MovieCard, MovieCardWrapper, MovieCardTitle } from '@components/MovieCard';
-import { Loading } from '@components/Loading';
+import { GenreCard, GenreCardWrapper, GenreCardTitle } from '@/components/GenreCard';
+import { ActorCard, ActorCardWrapper, ActorCardTitle } from '@/components/ActorCard';
+import { MovieCard, MovieCardWrapper, MovieCardTitle } from '@/components/MovieCard';
+import { Loading } from '@/components/Loading';
 
-import { formatCurrentMovie } from '@utils/formatCurrentMovie';
+import { formatCurrentMovie } from '@/utils/formatCurrentMovie';
 
 import {
   Container,
@@ -49,7 +49,7 @@ const MovieDetails: FC = () => {
 
   const onNavigateToMovieDetails = (movieId: number): void => {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
-    router.push(`moviedetails/${movieId}`);
+    router.push(`movie-details/${movieId}`);
   };
 
   return (
@@ -150,7 +150,7 @@ const MovieDetails: FC = () => {
                       renderItem={({ item }) => (
                         <MovieCard
                           data={item}
-                          pathname="moviedetails"
+                          pathname="movie-details"
                           onPress={() => onNavigateToMovieDetails(item.id)}
                         />
                       )}

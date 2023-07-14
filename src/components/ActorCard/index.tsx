@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { useTheme } from 'styled-components/native';
 import { FileX } from 'phosphor-react-native';
 
-import { apiImageUrl } from '@services/api';
+import { apiImageUrl } from '@/services/api';
 
-import { CreditsDTO } from '@dtos/Movie/CreditsDTO';
+import { CreditsDTO } from '@/dtos/Movie/CreditsDTO';
 
 import {
   Container,

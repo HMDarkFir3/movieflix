@@ -1,8 +1,8 @@
-import { api } from '@services/api';
+import { api } from '@/services/api';
 
-import { MoviesDTO } from '@dtos/Movie/MoviesDTO';
-import { DetailsDTO } from '@dtos/Movie/DetailsDTO';
-import { CreditsDTO } from '@dtos/Movie/CreditsDTO';
+import { MoviesDTO } from '@/dtos/Movie/MoviesDTO';
+import { DetailsDTO } from '@/dtos/Movie/DetailsDTO';
+import { CreditsDTO } from '@/dtos/Movie/CreditsDTO';
 
 const getUpcomingMovies = async () => {
   const response = await api.get<MoviesDTO.Response>('/movie/upcoming');

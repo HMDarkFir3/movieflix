@@ -2,15 +2,16 @@ import { Link } from 'expo-router';
 import { FC } from 'react';
 import { PressableProps } from 'react-native';
 
-import { apiImageUrl } from '@services/api';
+import { apiImageUrl } from '@/services/api';
 
-import { MoviesDTO } from '@dtos/Movie/MoviesDTO';
+import { MoviesDTO } from '@/dtos/Movie/MoviesDTO';
 
-import { RatingCard } from '@components/RatingCard';
+import { RatingCard } from '@/components/RatingCard';
 
 import {
   Container,
   Wrapper,
+  RatingCardWrapper,
   Poster,
   Title,
   UpcomingCardWrapper,
@@ -19,7 +20,7 @@ import {
 
 interface Props extends PressableProps {
   data: MoviesDTO.Result;
-  pathname: 'seriedetails' | 'moviedetails';
+  pathname: 'serie-details' | 'movie-details';
 }
 
 export const UpcomingCard: FC<Props> = (props) => {
@@ -33,10 +34,13 @@ export const UpcomingCard: FC<Props> = (props) => {
       <Container {...rest}>
         <Wrapper>
           <Poster source={{ uri: `${apiImageUrl}${backdropPath}` }} resizeMode="contain" />
-
-          <RatingCard rating={rating} />
-          <Title>{title}</Title>
         </Wrapper>
+
+        <RatingCardWrapper>
+          <RatingCard rating={rating} />
+        </RatingCardWrapper>
+
+        <Title>{title}</Title>
       </Container>
     </Link>
   );

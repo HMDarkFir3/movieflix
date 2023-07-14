@@ -1,36 +1,31 @@
-import { useQueries } from "react-query";
+import { useQueries } from 'react-query';
 
 import {
   getAiringTodaySeries,
   getOnTheAirSeries,
   getPopularSeries,
   getTopRatedSeries,
-} from "@services/series";
+} from '@/services/series';
 
-const useSeriesRequest = (enabled: boolean) => {
-  const [airingTodaySeries, onTheAirSeries, popularSeries, topRatedSeries] =
-    useQueries([
-      {
-        queryKey: "airingTodaySeries",
-        queryFn: () => getAiringTodaySeries(),
-        enabled,
-      },
-      {
-        queryKey: "onTheAirSeries",
-        queryFn: () => getOnTheAirSeries(),
-        enabled,
-      },
-      {
-        queryKey: "popularSeries",
-        queryFn: () => getPopularSeries(),
-        enabled,
-      },
-      {
-        queryKey: "topRatedSeries",
-        queryFn: () => getTopRatedSeries(),
-        enabled,
-      },
-    ]);
+const useSeriesRequest = () => {
+  const [airingTodaySeries, onTheAirSeries, popularSeries, topRatedSeries] = useQueries([
+    {
+      queryKey: 'airingTodaySeries',
+      queryFn: () => getAiringTodaySeries(),
+    },
+    {
+      queryKey: 'onTheAirSeries',
+      queryFn: () => getOnTheAirSeries(),
+    },
+    {
+      queryKey: 'popularSeries',
+      queryFn: () => getPopularSeries(),
+    },
+    {
+      queryKey: 'topRatedSeries',
+      queryFn: () => getTopRatedSeries(),
+    },
+  ]);
 
   return { airingTodaySeries, onTheAirSeries, popularSeries, topRatedSeries };
 };

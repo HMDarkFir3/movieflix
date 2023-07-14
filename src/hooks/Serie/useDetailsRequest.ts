@@ -1,6 +1,6 @@
 import { useQueries } from 'react-query';
 
-import { getSerieDetails, getRecommendedSeries } from '@services/series';
+import { getSerieDetails, getRecommendedSeries } from '@/services/series';
 
 const useDetailsRequest = (id: number) => {
   const [serieDetails, recommendedSeries] = useQueries([

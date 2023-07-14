@@ -4,18 +4,18 @@ import { PressableProps } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { FileX } from 'phosphor-react-native';
 
-import { apiImageUrl } from '@services/api';
+import { apiImageUrl } from '@/services/api';
 
-import { SeriesDTO } from '@dtos/Serie/SeriesDTO';
-import { MoviesDTO } from '@dtos/Movie/MoviesDTO';
+import { SeriesDTO } from '@/dtos/Serie/SeriesDTO';
+import { MoviesDTO } from '@/dtos/Movie/MoviesDTO';
 
-import { RatingCard } from '@components/RatingCard';
+import { RatingCard } from '@/components/RatingCard';
 
 import { Container, Poster, EmptyPoster, MovieCardWrapper, MovieCardTitle } from './styles';
 
 interface Props extends PressableProps {
   data: MoviesDTO.Result | SeriesDTO.Result;
-  pathname: 'seriedetails' | 'moviedetails';
+  pathname: 'serie-details' | 'movie-details';
 }
 
 export const MovieCard: FC<Props> = (props) => {

@@ -27,6 +27,11 @@
     },
     "web": {
       "bundler": "metro"
-    }
+    },
+    "experiments": {
+      "typedRoutes": true,
+      "tsconfigPaths": true
+    },
+    "plugins": ["expo-router"]
   }
 }

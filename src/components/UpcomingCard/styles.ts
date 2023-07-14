@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components/native';
 
-import { SCREEN_WIDTH } from '@utils/constants';
+import { SCREEN_WIDTH } from '@/utils/constants';
 
 export const Container = styled.Pressable`
   width: ${SCREEN_WIDTH}px;
@@ -8,6 +8,11 @@ export const Container = styled.Pressable`
 
 export const Wrapper = styled.View`
   padding: 0 20px;
+`;
+
+export const RatingCardWrapper = styled.View`
+  position: absolute;
+  left: 20px;
 `;
 
 export const Poster = styled.Image`

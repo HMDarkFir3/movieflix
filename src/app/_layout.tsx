@@ -3,14 +3,13 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import { Roboto_400Regular, Roboto_500Medium, Roboto_700Bold } from '@expo-google-fonts/roboto';
 import { FC } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import { QueryClientProvider } from 'react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ThemeProvider } from 'styled-components/native';
 
-import { queryClient } from '@services/queryClient';
+import { queryClient } from '@/services/queryClient';
 
-import { dark } from '@themes/dark';
+import { dark } from '@/themes/dark';
 
 const RootLayout: FC = () => {
   SplashScreen.preventAutoHideAsync();
@@ -24,15 +23,13 @@ const RootLayout: FC = () => {
   SplashScreen.hideAsync();
 
   return (
-    <NavigationContainer>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={dark}>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <Slot />
-          </GestureHandlerRootView>
-        </ThemeProvider>
-      </QueryClientProvider>
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={dark}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Slot />
+        </GestureHandlerRootView>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 };
 

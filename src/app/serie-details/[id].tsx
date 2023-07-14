@@ -4,24 +4,24 @@ import { FlatList } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { ArrowLeft, Star, ListPlus, FileX } from 'phosphor-react-native';
 
-import { DetailsDTO } from '@dtos/Serie/DetalsDTO';
-import { SeasonDetailsDTO } from '@dtos/Serie/SeasonDetailsDTO';
+import { DetailsDTO } from '@/dtos/Serie/DetalsDTO';
+import { SeasonDetailsDTO } from '@/dtos/Serie/SeasonDetailsDTO';
 
-import { apiImageUrl } from '@services/api';
-import { getSeasonDetails } from '@services/series';
+import { apiImageUrl } from '@/services/api';
+import { getSeasonDetails } from '@/services/series';
 
-import { useDetailsRequest } from '@hooks/Serie/useDetailsRequest';
+import { useDetailsRequest } from '@/hooks/Serie/useDetailsRequest';
 
-import { GenreCard, GenreCardWrapper, GenreCardTitle } from '@components/GenreCard';
-import { SeasonCard, SeasonCardWrapper, SeasonCardTitle } from '@components/SeasonCard';
-import { EpisodeCard, EpisodeCardWrapper, EpisodeCardTitle } from '@components/EpisodeCard';
+import { GenreCard, GenreCardWrapper, GenreCardTitle } from '@/components/GenreCard';
+import { SeasonCard, SeasonCardWrapper, SeasonCardTitle } from '@/components/SeasonCard';
+import { EpisodeCard, EpisodeCardWrapper, EpisodeCardTitle } from '@/components/EpisodeCard';
 // import {
 //   ActorCard,
 //   ActorCardWrapper,
 //   ActorCardTitle,
 // } from '@components-of-screens/MovieDetails/components/ActorCard';
-import { MovieCard, MovieCardWrapper, MovieCardTitle } from '@components/MovieCard';
-import { Loading } from '@components/Loading';
+import { MovieCard, MovieCardWrapper, MovieCardTitle } from '@/components/MovieCard';
+import { Loading } from '@/components/Loading';
 
 import {
   Container,
@@ -77,7 +77,7 @@ const SerieDetails: FC = () => {
     setPoster('');
     setOverview(null);
     setSeasonDetails(null);
-    router.push(`seriedetails/${serieId}`);
+    router.push(`serie-details/${serieId}`);
   };
 
   useEffect(() => {
@@ -234,7 +234,7 @@ const SerieDetails: FC = () => {
                       renderItem={({ item }) => (
                         <MovieCard
                           data={item}
-                          pathname="seriedetails"
+                          pathname="serie-details"
                           onPress={() => onNavigateToSerieDetails(item.id)}
                         />
                       )}

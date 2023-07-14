@@ -1,6 +1,6 @@
 import { useQueries } from 'react-query';
 
-import { getMovieDetails, getMovieCredits, getRecommendedMovies } from '@services/movies';
+import { getMovieDetails, getMovieCredits, getRecommendedMovies } from '@/services/movies';
 
 const useDetailsRequest = (id: number) => {
   const [movieDetails, movieCredits, recommendedMovies] = useQueries([
